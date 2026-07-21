@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>مازن و آية — دعوة خطوبة</title>
+<meta property="og:title" content="Mazen & Aya — Engagement" />
+<meta property="og:description" content="يسعدنا دعوتكم لمشاركتنا فرحة خطوبتنا" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet" />
+<!-- QR generation + scanning -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js" defer></script>
+<style>
+:root{
+  --bg:#faf6f2; --bg2:#f3eae3; --paper:#fffdfb;
+  --ink:#3f3437; --muted:#8a7a7e;
+  --accent:#b5748a;        /* soft rose */
+  --accent-deep:#8e5468;
+  --gold:#c9a86a; --green:#8ba888;
+  --line:rgba(142,84,104,.16);
+  --shadow:0 24px 60px -28px rgba(90,50,64,.5);
+  --r:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{overflow-x:clip;}
+body{
+  font-family:'Tajawal','Jost',sans-serif;color:var(--ink);
+  background:linear-gradient(180deg,#faf6f2,#f3eae3 60%,#efe4dc);
+  line-height:1.7;overflow-x:clip;
+}
+body[dir="ltr"]{font-family:'Jost','Tajawal',sans-serif;}
+.en{display:none;} .ar{display:inline;}
+body[dir="ltr"] .en{display:inline;} body[dir="ltr"] .ar{display:none;}
+.block.en{display:none;} .block.ar{display:block;}
+body[dir="ltr"] .block.en{display:block;} body[dir="ltr"] .block.ar{display:none;}
+
+section{padding:78px 22px;max-width:680px;margin:0 auto;text-align:center;}
+h2.title{font-family:'El Messiri',serif;font-weight:600;font-size:30px;color:var(--accent-deep);margin-bottom:6px;}
+body[dir="ltr"] h2.title{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:34px;letter-spacing:.02em;}
+.kicker{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-family:'Jost',sans-serif;}
+.rule{width:54px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:18px auto 30px;}
+
+/* top bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;
+  padding:12px 16px;background:rgba(250,246,242,.95);border-bottom:1px solid var(--line);
+  transform:translateZ(0);will-change:transform;}
+.brand{font-family:'Great Vibes',cursive;font-size:24px;color:var(--accent-deep);}
+.topbtns{display:flex;gap:8px;align-items:center;}
+.pill{border:1px solid var(--line);background:var(--paper);border-radius:30px;padding:7px 13px;font-size:13px;color:var(--accent-deep);
+  cursor:pointer;display:flex;align-items:center;gap:6px;font-family:inherit;transition:.2s;}
+.pill:hover{background:#fff;border-color:var(--accent);}
+.pill svg{width:15px;height:15px;}
+.pill.active-music{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:100px 22px 60px;position:relative;max-width:none;}
+.hero .kicker{margin-bottom:18px;}
+.bism{font-family:'El Messiri',serif;color:var(--accent);font-size:19px;margin-bottom:20px;}
+.names{font-family:'Great Vibes',cursive;font-size:clamp(44px,13vw,96px);line-height:1.02;color:var(--accent-deep);max-width:100%;padding:0 6px;word-break:break-word;}
+.names .amp{display:block;font-size:.4em;color:var(--gold);margin:2px 0;font-family:'Cormorant Garamond',serif;font-style:italic;}
+.names-ar{font-family:'El Messiri',serif;font-size:clamp(26px,8vw,40px);color:var(--accent);margin-top:10px;font-weight:600;}
+.hero-sub{margin-top:16px;color:var(--muted);font-size:17px;letter-spacing:.04em;}
+.scrolldown{margin-top:42px;color:var(--accent);opacity:.7;animation:bob 1.8s infinite;}
+.scrolldown svg{width:26px;height:26px;}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+
+/* countdown */
+.countdown{display:flex;gap:10px;justify-content:center;margin-top:36px;flex-wrap:wrap;}
+.cd-box{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 8px;min-width:70px;box-shadow:var(--shadow);}
+.cd-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--accent-deep);line-height:1;}
+.cd-lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:7px;font-family:'Jost',sans-serif;}
+
+/* details */
+.detail-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;box-shadow:var(--shadow);}
+.detail-row{display:flex;align-items:center;gap:14px;padding:14px 4px;border-bottom:1px dashed var(--line);text-align:start;}
+.detail-row:last-child{border-bottom:none;}
+.detail-row .ic{color:var(--accent);flex:0 0 auto;display:flex;}
+.detail-row .ic svg{width:24px;height:24px;}
+.detail-row b{display:block;color:var(--ink);font-weight:700;font-size:18px;}
+.detail-row span.s{color:var(--muted);font-size:14px;}
+.map-embed{margin-top:20px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);}
+.map-embed iframe{width:100%;height:240px;border:0;display:block;}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 22px;border-radius:40px;
+  font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;border:none;transition:transform .15s,box-shadow .25s,background .2s;}
+.btn svg{width:19px;height:19px;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-deep));color:#fff;box-shadow:0 14px 30px -12px rgba(142,84,104,.7);}
+.btn-ghost{background:var(--paper);color:var(--accent-deep);border:1.5px solid var(--line);}
+.btn-ghost:hover{background:#fff;border-color:var(--accent);}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;}
+
+/* gallery */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;}
+.gallery figure{position:relative;aspect-ratio:3/4;border-radius:14px;overflow:hidden;border:1px solid var(--line);
+  background:linear-gradient(135deg,#f0dfe4,#e7d3c9);cursor:pointer;box-shadow:var(--shadow);}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;}
+.gallery .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#c69fac;}
+.gallery .ph svg{width:34px;height:34px;opacity:.6;}
+.gallery figure:nth-child(1){grid-column:span 2;grid-row:span 2;aspect-ratio:1/1;}
+.lightbox{position:fixed;inset:0;background:rgba(40,25,32,.92);z-index:60;display:none;align-items:center;justify-content:center;padding:20px;}
+.lightbox.show{display:flex;}
+.lightbox img{max-width:100%;max-height:88vh;border-radius:12px;}
+.lightbox .x{position:absolute;top:18px;inset-inline-end:20px;color:#fff;font-size:34px;cursor:pointer;line-height:1;}
+
+/* forms */
+.form{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px 20px;box-shadow:var(--shadow);text-align:start;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:14px;color:var(--accent-deep);margin-bottom:6px;font-weight:500;}
+.field input,.field textarea,.field select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;
+  font-family:inherit;font-size:15px;background:#fff;color:var(--ink);}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(181,116,138,.15);}
+.seg{display:flex;gap:8px;}
+.seg label{flex:1;position:relative;cursor:pointer;margin:0;}
+.seg input{position:absolute;opacity:0;}
+.seg span{display:block;text-align:center;padding:11px;border:1px solid var(--line);border-radius:12px;font-size:14px;transition:.2s;background:#fff;}
+.seg input:checked + span{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* wishes */
+.wishes-list{margin-top:22px;display:flex;flex-direction:column;gap:12px;text-align:start;}
+.wish{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:0 10px 24px -18px rgba(90,50,64,.5);}
+.wish .who{font-weight:700;color:var(--accent-deep);font-size:15px;}
+.wish .msg{color:var(--ink);font-size:15px;margin-top:3px;}
+.wish .time{color:var(--muted);font-size:12px;margin-top:5px;font-family:'Jost',sans-serif;}
+.empty{color:var(--muted);font-size:14px;padding:16px;}
+
+/* floating camera button */
+.fab{position:fixed;inset-inline-end:16px;bottom:18px;z-index:45;width:62px;height:62px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-deep));color:#fff;border:none;cursor:pointer;
+  box-shadow:0 16px 34px -10px rgba(142,84,104,.75);display:flex;align-items:center;justify-content:center;
+  animation:pop 3s ease-in-out infinite;}
+.fab svg{width:28px;height:28px;}
+@keyframes pop{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+.fab .lab{position:absolute;inset-inline-end:70px;white-space:nowrap;background:#fff;color:var(--accent-deep);
+  font-size:13px;padding:6px 12px;border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--line);}
+
+/* modal shell */
+.modal{position:fixed;inset:0;z-index:70;background:rgba(30,18,24,.6);backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;padding:16px;}
+.modal.show{display:flex;}
+.sheet{background:var(--paper);border-radius:24px;width:100%;max-width:440px;max-height:92vh;overflow-y:auto;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.5);position:relative;}
+.sheet-head{position:sticky;top:0;background:var(--paper);z-index:2;display:flex;justify-content:space-between;align-items:center;
+  padding:16px 18px;border-bottom:1px solid var(--line);}
+.sheet-head h3{font-family:'El Messiri',serif;font-size:19px;color:var(--accent-deep);}
+body[dir="ltr"] .sheet-head h3{font-family:'Cormorant Garamond',serif;font-size:22px;}
+.sheet-body{padding:18px;}
+.close-x{background:none;border:none;font-size:26px;color:var(--muted);cursor:pointer;line-height:1;}
+
+/* photo booth */
+.cam-stage{position:relative;width:100%;aspect-ratio:3/4;background:#000;border-radius:16px;overflow:hidden;}
+#camVideo,#camCanvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+#camCanvas{display:none;}
+.frame-picker{display:flex;gap:8px;overflow-x:auto;padding:12px 2px;}
+.frame-opt{flex:0 0 auto;padding:8px 14px;border:1px solid var(--line);border-radius:20px;background:#fff;font-size:13px;cursor:pointer;color:var(--accent-deep);}
+.frame-opt.sel{background:var(--accent);color:#fff;border-color:var(--accent);}
+.cam-controls{display:flex;gap:10px;justify-content:center;margin-top:6px;}
+.shutter{width:64px;height:64px;border-radius:50%;background:#fff;border:4px solid var(--accent);cursor:pointer;box-shadow:var(--shadow);}
+.cam-mini{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--accent-deep);}
+.cam-mini svg{width:20px;height:20px;}
+
+/* QR pass */
+.pass-card{background:linear-gradient(160deg,#fff,#fbeef1);border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center;box-shadow:var(--shadow);}
+.pass-card .qr{display:flex;justify-content:center;margin:12px 0;}
+.pass-card .pname{font-family:'El Messiri',serif;font-size:20px;color:var(--accent-deep);}
+.badge{display:inline-block;background:var(--accent);color:#fff;font-size:12px;padding:3px 12px;border-radius:20px;letter-spacing:.05em;}
+
+/* dashboard */
+.dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;}
+.stat .n{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--accent-deep);}
+.stat .l{font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-family:'Jost',sans-serif;}
+.tabbar{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.tabbar button{flex:1;padding:9px;border:1px solid var(--line);background:#fff;border-radius:10px;font-family:inherit;font-size:13px;color:var(--accent-deep);cursor:pointer;}
+.tabbar button.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+.tabpane{display:none;} .tabpane.on{display:block;}
+.list-item{display:flex;justify-content:space-between;gap:10px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:#fff;text-align:start;font-size:14px;}
+.list-item .r{color:var(--muted);font-size:12px;white-space:nowrap;}
+.mini-chart{display:flex;align-items:flex-end;gap:5px;height:90px;padding:8px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:6px;}
+.bar{flex:1;background:linear-gradient(180deg,var(--accent),var(--accent-deep));border-radius:5px 5px 0 0;min-height:3px;}
+.scan-box{border:1px dashed var(--accent);border-radius:14px;overflow:hidden;margin-bottom:10px;}
+#reader{width:100%;}
+.scan-result{padding:12px;border-radius:12px;font-size:15px;text-align:center;margin-top:8px;font-weight:600;}
+.ok{background:#e7f4e7;color:#3f7a3f;border:1px solid #b9dcb9;}
+.dup{background:#fdeaea;color:#a53d3d;border:1px solid #e6b7b7;}
+.live-counter{font-family:'Cormorant Garamond',serif;font-size:44px;color:var(--accent-deep);text-align:center;font-weight:600;}
+
+.foot{padding:60px 22px 120px;text-align:center;}
+.foot .heart{color:var(--accent);font-size:15px;font-style:italic;}
+.hostlink{margin-top:26px;}
+.hostlink button{background:none;border:1px solid var(--line);color:var(--muted);border-radius:30px;padding:9px 18px;font-size:12px;cursor:pointer;font-family:inherit;letter-spacing:.06em;}
+.note{font-size:12px;color:var(--muted);background:#fff6f8;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:12px;text-align:start;}
+
+/* ===== opening intro (video) ===== */
+body.intro-active{overflow:hidden;height:100vh;}
+#intro{position:fixed;inset:0;z-index:100;background:#140c0f;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s ease;}
+#intro.fade{opacity:0;}
+#intro.done{display:none;}
+#introVideo{width:100%;height:100%;object-fit:cover;background:#140c0f;}
+.intro-gate{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:30px 22px;overflow:hidden;transition:opacity .6s ease;
+  background:radial-gradient(125% 85% at 50% 16%,#fffdfb 0%,#fbf1ec 46%,#f2ddd8 100%);}
+.intro-gate.hide{opacity:0;pointer-events:none;}
+.intro-gate::before{content:"";position:absolute;inset:15px;border:1px solid rgba(201,168,106,.55);border-radius:10px;pointer-events:none;}
+.intro-gate::after{content:"";position:absolute;inset:22px;border:1px solid rgba(201,168,106,.26);border-radius:6px;pointer-events:none;}
+.gate-corner{position:absolute;width:44px;height:44px;color:#c9a86a;z-index:3;opacity:.9;}
+.gate-corner.tl{top:24px;inset-inline-start:24px;}
+.gate-corner.tr{top:24px;inset-inline-end:24px;transform:scaleX(-1);}
+.gate-corner.bl{bottom:24px;inset-inline-start:24px;transform:scaleY(-1);}
+.gate-corner.br{bottom:24px;inset-inline-end:24px;transform:scale(-1,-1);}
+.gate-inner{position:relative;z-index:2;max-width:430px;display:flex;flex-direction:column;align-items:center;
+  animation:gateIn 1.15s cubic-bezier(.2,.7,.2,1) both;}
+@keyframes gateIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+.gate-kicker{font-family:'Jost',sans-serif;font-size:11.5px;letter-spacing:.44em;text-transform:uppercase;color:#b6924e;margin-bottom:22px;}
+.gate-monogram{width:104px;height:104px;border-radius:50%;border:1px solid rgba(201,168,106,.7);position:relative;
+  display:flex;align-items:center;justify-content:center;margin-bottom:22px;
+  box-shadow:0 12px 32px -16px rgba(124,58,74,.55),inset 0 0 0 6px rgba(255,255,255,.65);}
+.gate-monogram::before{content:"";position:absolute;inset:7px;border-radius:50%;border:1px solid rgba(201,168,106,.32);}
+.gate-monogram b{font-family:'Great Vibes',cursive;font-size:42px;color:#8e5468;font-weight:400;line-height:1;}
+.gate-names{font-family:'El Messiri',serif;font-weight:600;font-size:clamp(30px,9vw,46px);color:#7c3a4a;line-height:1.18;}
+.gate-and{color:#c9a86a;}
+.gate-en{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:#a45c6b;margin-top:5px;letter-spacing:.02em;}
+.gate-div{display:flex;align-items:center;gap:13px;margin:20px 0 6px;color:#c9a86a;}
+.gate-div .l{height:1px;width:54px;background:linear-gradient(90deg,transparent,#c9a86a);}
+.gate-div .l.r{background:linear-gradient(270deg,transparent,#c9a86a);}
+.gate-div svg{width:15px;height:15px;}
+.gate-date{font-family:'Jost',sans-serif;font-size:12.5px;letter-spacing:.16em;color:#8a7a7e;text-transform:uppercase;margin:8px 0 30px;}
+.gate-btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:11px;
+  background:linear-gradient(135deg,#8e5468,#7c3a4a);color:#fff;border:none;border-radius:46px;
+  padding:16px 34px;font-family:'El Messiri',serif;font-size:18px;font-weight:600;cursor:pointer;letter-spacing:.02em;
+  box-shadow:0 18px 40px -14px rgba(124,58,74,.75);animation:gateFloat 3s ease-in-out infinite;}
+body[dir="ltr"] .gate-btn{font-family:'Cormorant Garamond',serif;font-size:20px;}
+.gate-btn svg{width:20px;height:20px;}
+.gate-btn::after{content:"";position:absolute;top:0;inset-inline-start:-60%;width:38%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,234,196,.6),transparent);transform:skewX(-18deg);
+  animation:gateShine 3.6s ease-in-out infinite;}
+@keyframes gateShine{0%,58%{inset-inline-start:-60%;}100%{inset-inline-start:130%;}}
+@keyframes gateFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+.gate-tap{font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:#b6924e;margin-top:18px;opacity:.85;}
+#skipIntro{position:absolute;top:14px;inset-inline-end:16px;z-index:6;background:rgba(255,255,255,.85);
+  border:1px solid rgba(142,84,104,.2);color:#8e5468;border-radius:24px;padding:7px 15px;font-size:13px;
+  cursor:pointer;font-family:inherit;}
+
+/* falling petals */
+.petal{position:fixed;top:-40px;z-index:1;pointer-events:none;will-change:transform,opacity;animation:fall linear infinite;}
+@keyframes fall{0%{transform:translate3d(0,-40px,0) rotate(0deg);opacity:0;}12%{opacity:.85;}100%{transform:translate3d(0,108vh,0) rotate(360deg);opacity:.15;}}
+/* floral corner ornaments on hero */
+.floral{position:absolute;width:150px;height:150px;z-index:1;pointer-events:none;opacity:.9;}
+.floral.tl{top:64px;inset-inline-start:-6px;}
+.floral.tr{top:64px;inset-inline-end:-6px;transform:scaleX(-1);}
+.floral.bl{bottom:8px;inset-inline-start:-6px;transform:scaleY(-1);}
+.floral.br{bottom:8px;inset-inline-end:-6px;transform:scale(-1,-1);}
+@media(max-width:480px){.floral{width:112px;height:112px;}}
+
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--accent-deep);color:#fff;
+  padding:12px 22px;border-radius:30px;font-size:15px;opacity:0;transition:.3s;z-index:90;box-shadow:var(--shadow);pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.reveal{opacity:0;transform:translateY(26px);transition:.8s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:none;}
+@media(max-width:600px){
+  section{padding:60px 18px;}
+  h2.title{font-size:26px;}
+  .topbar{padding:10px 12px;}
+  .brand{font-size:21px;}
+  .pill{padding:6px 11px;font-size:12px;}
+  .map-embed iframe{height:210px;}
+  .detail-row b{font-size:16px;}
+  .fab{width:56px;height:56px;inset-inline-end:12px;bottom:14px;}
+  .fab .lab{display:none;}
+  .sheet{max-width:100%;border-radius:20px;}
+}
+@media(max-width:400px){
+  .cd-box{min-width:58px;padding:12px 5px;}
+  .cd-num{font-size:26px;}
+  .names{font-size:clamp(38px,12vw,60px);}
+  .gallery{gap:7px;}
+}
+@media(max-width:340px){ .countdown{gap:6px;} .cd-box{min-width:52px;} }
+</style>
+</head>
+<body dir="rtl">
+
+<!-- OPENING INTRO (video) -->
+<div id="intro" role="presentation">
+  <video id="introVideo" playsinline preload="auto" src="intro.mp4"></video>
+  <div class="intro-gate" id="introGate">
+    <svg class="gate-corner tl" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M3 32 Q3 3 32 3"/><path d="M11 32 Q11 11 32 11"/><circle cx="32" cy="6.5" r="2" fill="currentColor" stroke="none"/><circle cx="6.5" cy="32" r="2" fill="currentColor" stroke="none"/></svg>
+    <svg class="gate-corner tr" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M3 32 Q3 3 32 3"/><path d="M11 32 Q11 11 32 11"/><circle cx="32" cy="6.5" r="2" fill="currentColor" stroke="none"/><circle cx="6.5" cy="32" r="2" fill="currentColor" stroke="none"/></svg>
+    <svg class="gate-corner bl" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M3 32 Q3 3 32 3"/><path d="M11 32 Q11 11 32 11"/><circle cx="32" cy="6.5" r="2" fill="currentColor" stroke="none"/><circle cx="6.5" cy="32" r="2" fill="currentColor" stroke="none"/></svg>
+    <svg class="gate-corner br" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M3 32 Q3 3 32 3"/><path d="M11 32 Q11 11 32 11"/><circle cx="32" cy="6.5" r="2" fill="currentColor" stroke="none"/><circle cx="6.5" cy="32" r="2" fill="currentColor" stroke="none"/></svg>
+    <div class="gate-inner">
+      <div class="gate-kicker"><span class="ar">دعوة خطوبة</span><span class="en">The Engagement of</span></div>
+      <div class="gate-monogram"><b>M&amp;A</b></div>
+      <div class="gate-names">مَازِن <span class="gate-and">وَ</span> آيَة</div>
+      <div class="gate-en">Mazen &amp; Aya</div>
+      <div class="gate-div"><span class="l"></span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"/></svg><span class="l r"></span></div>
+      <div class="gate-date"><span class="ar">الخميس ٣٠ يوليو ٢٠٢٦</span><span class="en">Thursday · 30 July 2026</span></div>
+      <button class="gate-btn" id="openInvite">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5L12 13l8.5-6.5"/></svg>
+        <span class="ar">افتح الدعوة</span><span class="en">Open the invitation</span>
+      </button>
+      <div class="gate-tap"><span class="ar">اضغط للبدء</span><span class="en">Tap to begin</span></div>
+    </div>
+  </div>
+  <button id="skipIntro"><span class="ar">تخطي ›</span><span class="en">Skip ›</span></button>
+</div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="brand">M &amp; A</div>
+  <div class="topbtns">
+    <button class="pill" id="musicBtn" title="Music"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg><span class="ar">موسيقى</span><span class="en">Music</span></button>
+    <button class="pill" id="langBtn"><span class="ar">EN</span><span class="en">ع</span></button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="floral tl" viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke="#c98a97" stroke-width="2" opacity=".85"><path d="M10 60 Q40 40 70 55 T130 40" stroke="#8ba888"/><path d="M12 92 Q52 82 82 96" stroke="#8ba888"/></g><g><circle cx="42" cy="46" r="11" fill="#e7a9b4"/><circle cx="42" cy="46" r="4" fill="#c9a86a"/><circle cx="76" cy="34" r="8" fill="#f0bcc6"/><circle cx="76" cy="34" r="3" fill="#c9a86a"/><circle cx="26" cy="80" r="9" fill="#d98d9c"/><circle cx="26" cy="80" r="3.5" fill="#c9a86a"/><ellipse cx="102" cy="42" rx="7" ry="12" fill="#9ab89a" transform="rotate(35 102 42)"/><ellipse cx="58" cy="70" rx="6" ry="11" fill="#9ab89a" transform="rotate(-25 58 70)"/></g></svg>
+  <svg class="floral tr" viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke="#c98a97" stroke-width="2" opacity=".85"><path d="M10 60 Q40 40 70 55 T130 40" stroke="#8ba888"/><path d="M12 92 Q52 82 82 96" stroke="#8ba888"/></g><g><circle cx="42" cy="46" r="11" fill="#e7a9b4"/><circle cx="42" cy="46" r="4" fill="#c9a86a"/><circle cx="76" cy="34" r="8" fill="#f0bcc6"/><circle cx="76" cy="34" r="3" fill="#c9a86a"/><circle cx="26" cy="80" r="9" fill="#d98d9c"/><circle cx="26" cy="80" r="3.5" fill="#c9a86a"/><ellipse cx="102" cy="42" rx="7" ry="12" fill="#9ab89a" transform="rotate(35 102 42)"/><ellipse cx="58" cy="70" rx="6" ry="11" fill="#9ab89a" transform="rotate(-25 58 70)"/></g></svg>
+  <div class="bism ar">بسم الله الرحمن الرحيم</div>
+  <div class="kicker"><span class="ar">بمشيئة الله</span><span class="en">By the grace of God</span></div>
+  <h1 class="names">Mazen Mousa<span class="amp">&amp;</span>Aya Aref</h1>
+  <div class="names-ar">مَازِن مُوسَى &nbsp;وَ&nbsp; آيَة عَارِف</div>
+  <div class="hero-sub"><span class="ar">يتشرفان بدعوتكم لحضور حفل خطوبتهما</span><span class="en">joyfully invite you to their engagement</span></div>
+  <div class="countdown" id="countdown">
+    <div class="cd-box"><div class="cd-num" id="cd-d">--</div><div class="cd-lab"><span class="ar">يوم</span><span class="en">Days</span></div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-h">--</div><div class="cd-lab"><span class="ar">ساعة</span><span class="en">Hours</span></div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-m">--</div><div class="cd-lab"><span class="ar">دقيقة</span><span class="en">Mins</span></div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-s">--</div><div class="cd-lab"><span class="ar">ثانية</span><span class="en">Secs</span></div></div>
+  </div>
+  <div class="scrolldown"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+</section>
+
+<!-- WELCOME -->
+<section class="reveal">
+  <div class="kicker"><span class="ar">أهلاً بكم</span><span class="en">Welcome</span></div>
+  <h2 class="title"><span class="ar">دعوة من القلب</span><span class="en">A Heartfelt Invitation</span></h2>
+  <div class="rule"></div>
+  <p class="block ar" style="color:var(--muted);font-size:18px;">
+    في يومٍ نحمله في قلوبنا للأبد، يسعدنا أن نشارككم فرحة خطوبتنا.
+    حضوركم بجانبنا هو أغلى هدية، ووجودكم يكمل بهجتنا.
+    ننتظركم لنحتفل سوياً ببداية حكايتنا. 💐
+  </p>
+  <p class="block en" style="color:var(--muted);font-size:18px;">
+    On a day we will hold in our hearts forever, we would be honored to share the joy of our engagement with you.
+    Your presence beside us is the greatest gift, and your company completes our happiness.
+    Come celebrate the beginning of our story. 💐
+  </p>
+</section>
+
+<!-- DETAILS + MAP -->
+<section class="reveal">
+  <div class="kicker"><span class="ar">التفاصيل</span><span class="en">The Details</span></div>
+  <h2 class="title"><span class="ar">موعدنا ومكاننا</span><span class="en">When &amp; Where</span></h2>
+  <div class="rule"></div>
+  <div class="detail-card">
+    <div class="detail-row">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
+      <span><b><span class="ar" id="dAr">الخميس ٣٠ يوليو ٢٠٢٦</span><span class="en" id="dEn">Thursday, 30 July 2026</span></b><span class="s"><span class="ar">الساعة السابعة مساءً</span><span class="en">at 7:00 PM</span></span></span>
+    </div>
+    <div class="detail-row">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 22s7-6.1 7-12A7 7 0 0 0 5 10c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+      <span><b><span class="ar">منتجع نيو لاند</span><span class="en">New Land Resort</span></b><span class="s"><span class="ar">قاعة سيليا</span><span class="en">Celia Hall</span></span></span>
+    </div>
+  </div>
+  <div class="btn-row">
+    <a class="btn btn-primary" id="mapBtn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-6.1 7-12A7 7 0 0 0 5 10c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg><span class="ar">الاتجاهات</span><span class="en">Directions</span></a>
+    <a class="btn btn-ghost" id="calBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4M12 13v4M10 15h4"/></svg><span class="ar">أضف إلى التقويم</span><span class="en">Add to calendar</span></a>
+  </div>
+  <div class="map-embed"><iframe id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+</section>
+
+<!-- RSVP -->
+<section class="reveal">
+  <div class="kicker"><span class="ar">تأكيد الحضور</span><span class="en">RSVP</span></div>
+  <h2 class="title"><span class="ar">هل ستشاركوننا الفرحة؟</span><span class="en">Will you join us?</span></h2>
+  <div class="rule"></div>
+  <form class="form" id="rsvpForm">
+    <div class="field"><label><span class="ar">الاسم</span><span class="en">Your name</span></label><input required id="rName" /></div>
+    <div class="field"><label><span class="ar">عدد الأشخاص</span><span class="en">Number of guests</span></label><input type="number" id="rCount" min="1" value="1" /></div>
+    <div class="field"><label><span class="ar">الحضور</span><span class="en">Attending?</span></label>
+      <div class="seg">
+        <label><input type="radio" name="att" value="yes" checked><span class="ar">سأحضر ✓</span><span class="en">Yes ✓</span></label>
+        <label><input type="radio" name="att" value="no"><span class="ar">أعتذر</span><span class="en">Can't make it</span></label>
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit" style="width:100%"><span class="ar">إرسال التأكيد</span><span class="en">Send RSVP</span></button>
+  </form>
+</section>
+
+<!-- WISHES -->
+<section class="reveal">
+  <div class="kicker"><span class="ar">كلمات من القلب</span><span class="en">Guest Wishes</span></div>
+  <h2 class="title"><span class="ar">اتركوا لنا أمنية</span><span class="en">Leave us a wish</span></h2>
+  <div class="rule"></div>
+  <form class="form" id="wishForm">
+    <div class="field"><label><span class="ar">اسمكم</span><span class="en">Your name</span></label><input required id="wName" /></div>
+    <div class="field"><label><span class="ar">رسالتكم</span><span class="en">Your message</span></label><textarea required id="wMsg" rows="3"></textarea></div>
+    <button class="btn btn-primary" type="submit" style="width:100%"><span class="ar">إرسال الأمنية</span><span class="en">Send wish</span></button>
+  </form>
+</section>
+
+<!-- QR PASS -->
+<section class="reveal" id="passSection">
+  <div class="kicker"><span class="ar">بطاقة الدخول</span><span class="en">Entry Pass</span></div>
+  <h2 class="title"><span class="ar">تصريح الدخول الخاص بكم</span><span class="en">Your personal QR pass</span></h2>
+  <div class="rule"></div>
+  <div id="passArea"></div>
+</section>
+
+<!-- FOOTER -->
+<div class="foot reveal">
+  <div class="brand" style="font-size:40px">Mazen &amp; Aya</div>
+  <p class="heart"><span class="ar">حضوركم أجمل هدية 🤍</span><span class="en">Your presence is the greatest gift 🤍</span></p>
+  <div class="hostlink"><button id="hostBtn"><span class="ar">🔒 لوحة تحكم المضيف</span><span class="en">🔒 Host Dashboard</span></button></div>
+</div>
+
+<!-- floating photo booth button -->
+<button class="fab" id="fabCam" title="Wedding Camera">
+  <span class="lab ar">كاميرا الفرح 📸</span><span class="lab en">Wedding Camera 📸</span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></svg>
+</button>
+
+<!-- PHOTO BOOTH MODAL -->
+<div class="modal" id="camModal">
+  <div class="sheet">
+    <div class="sheet-head"><h3><span class="ar">كاميرا الفرح 📸</span><span class="en">Wedding Camera 📸</span></h3><button class="close-x" data-close="camModal">&times;</button></div>
+    <div class="sheet-body">
+      <div class="cam-stage"><video id="camVideo" autoplay playsinline muted></video><canvas id="camCanvas"></canvas></div>
+      <div class="frame-picker" id="framePicker">
+        <div class="frame-opt sel" data-frame="retro"><span class="ar">ريترو</span><span class="en">Retro</span></div>
+        <div class="frame-opt" data-frame="gold"><span class="ar">ذهبي</span><span class="en">Gold</span></div>
+        <div class="frame-opt" data-frame="film"><span class="ar">فيلم</span><span class="en">Film</span></div>
+        <div class="frame-opt" data-frame="floral"><span class="ar">زهور</span><span class="en">Floral</span></div>
+      </div>
+      <div class="cam-controls">
+        <button class="cam-mini" id="flipCam" title="Flip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></button>
+        <button class="shutter" id="shutter" title="Capture"></button>
+        <button class="cam-mini" id="dlPhoto" title="Download" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></button>
+      </div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn btn-ghost" id="retakePhoto" style="display:none"><span class="ar">إعادة</span><span class="en">Retake</span></button>
+        <button class="btn btn-primary" id="sharePhoto" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4M12 2v14"/></svg><span class="ar">مشاركة</span><span class="en">Share</span></button>
+      </div>
+      <p class="note" id="camNote"><span class="ar">اسمحوا بالوصول للكاميرا لالتقاط صورة بإطار الحفل.</span><span class="en">Allow camera access to snap a framed memory.</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD MODAL -->
+<div class="modal" id="dashModal">
+  <div class="sheet">
+    <div class="sheet-head"><h3><span class="ar">لوحة تحكم المضيف</span><span class="en">Host Dashboard</span></h3><button class="close-x" data-close="dashModal">&times;</button></div>
+    <div class="sheet-body" id="dashBody">
+      <!-- login -->
+      <div id="dashLogin">
+        <div class="field"><label><span class="ar">كلمة المرور</span><span class="en">Password</span></label><input type="password" id="dashPass" /></div>
+        <button class="btn btn-primary" id="dashEnter" style="width:100%"><span class="ar">دخول</span><span class="en">Enter</span></button>
+        <p class="note"><span class="ar">للمضيف فقط.</span><span class="en">Host access only.</span></p>
+      </div>
+      <!-- panel -->
+      <div id="dashPanel" style="display:none">
+        <div class="dash-grid">
+          <div class="stat"><div class="n" id="sVisits">0</div><div class="l"><span class="ar">زيارة</span><span class="en">Visits</span></div></div>
+          <div class="stat"><div class="n" id="sYes">0</div><div class="l"><span class="ar">حضور مؤكد</span><span class="en">Attending</span></div></div>
+          <div class="stat"><div class="n" id="sGuests">0</div><div class="l"><span class="ar">إجمالي المدعوين</span><span class="en">Total heads</span></div></div>
+          <div class="stat"><div class="n" id="sCheck">0</div><div class="l"><span class="ar">تم الدخول</span><span class="en">Checked in</span></div></div>
+        </div>
+        <div class="tabbar">
+          <button class="on" data-tab="tRsvp">RSVP</button>
+          <button data-tab="tWish"><span class="ar">أمنيات</span><span class="en">Wishes</span></button>
+          <button data-tab="tPass"><span class="ar">تصاريح</span><span class="en">Passes</span></button>
+          <button data-tab="tScan"><span class="ar">مسح</span><span class="en">Scan</span></button>
+          <button data-tab="tInsight"><span class="ar">تحليلات</span><span class="en">Insights</span></button>
+        </div>
+
+        <div class="tabpane on" id="tRsvp"><div id="rsvpAdmin"></div></div>
+        <div class="tabpane" id="tWish"><div id="wishAdmin"></div></div>
+
+        <div class="tabpane" id="tPass">
+          <div class="form" style="box-shadow:none;padding:14px;border:none;background:transparent">
+            <div class="field"><label><span class="ar">اسم الضيف / العائلة</span><span class="en">Guest / family name</span></label><input id="pgName" /></div>
+            <div class="field"><label><span class="ar">النوع</span><span class="en">Type</span></label>
+              <div class="seg">
+                <label><input type="radio" name="ptype" value="single" checked><span class="ar">فردي</span><span class="en">Single</span></label>
+                <label><input type="radio" name="ptype" value="family"><span class="ar">عائلة</span><span class="en">Family</span></label>
+              </div>
+            </div>
+            <div class="field" id="pcountWrap" style="display:none"><label><span class="ar">عدد الأفراد</span><span class="en">Members</span></label><input type="number" id="pgCount" min="2" value="2" /></div>
+            <button class="btn btn-primary" id="genPass" style="width:100%"><span class="ar">إنشاء تصريح</span><span class="en">Create pass</span></button>
+          </div>
+          <div id="passOut"></div>
+          <div id="passListAdmin" style="margin-top:12px"></div>
+        </div>
+
+        <div class="tabpane" id="tScan">
+          <div class="live-counter" id="liveCount">0</div>
+          <p style="text-align:center;color:var(--muted);font-size:13px;margin-bottom:10px"><span class="ar">إجمالي من دخلوا</span><span class="en">Total checked in</span></p>
+          <button class="btn btn-primary" id="startScan" style="width:100%;margin-bottom:10px"><span class="ar">ابدأ المسح</span><span class="en">Start scanner</span></button>
+          <div class="scan-box" id="scanBox" style="display:none"><div id="reader"></div></div>
+          <div id="scanResult"></div>
+        </div>
+
+        <div class="tabpane" id="tInsight">
+          <p style="color:var(--muted);font-size:14px;text-align:start"><span class="ar">الزيارات آخر ٧ فترات:</span><span class="en">Visits over recent sessions:</span></p>
+          <div class="mini-chart" id="visitChart"></div>
+          <p class="note" style="margin-top:14px"><span class="ar">⚠️ هذه البيانات محفوظة على هذا الجهاز فقط. لمزامنة الردود من كل الضيوف في لوحة واحدة، يلزم ربط قاعدة بيانات (Supabase مجاني) — أخبرني لأجهّزه.</span><span class="en">⚠️ This data is stored on this device only. To sync every guest's replies into one live dashboard, a backend (free Supabase) is needed — tell me and I'll set it up.</span></p>
+          <button class="btn btn-ghost" id="wipeData" style="width:100%;margin-top:12px"><span class="ar">مسح كل البيانات</span><span class="en">Clear all data</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="bgAudio" loop></audio>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================================
+   >>> EDIT YOUR DETAILS HERE <<<
+   ===================================================================== */
+const CONFIG = {
+  names_en:["Mazen","Aya"], names_ar:"مَازِن وَ آيَة",
+  year:2026, month:7, day:30, hour:19, minute:0, durationHours:4,
+
+  venueName_en:"New Land Resort", venueName_ar:"منتجع نيو لاند",
+  hall_en:"Celia Hall", hall_ar:"قاعة سيليا",
+  mapUrl:"https://maps.app.goo.gl/WPW6k8KwskCUS6nV6",
+  // Embedded map search term (change to exact place if the pin is off):
+  mapEmbedQuery:"New Land Resort Celia Hall",
+
+  // RSVP destination — WhatsApp (digits only, intl format) OR leave "" to use email:
+  whatsapp:"", rsvpEmail:"mazenmousa55@gmail.com",
+
+  // Background music file (mp3 URL). Leave "" for no music.
+  musicUrl:"music.mp3",
+
+  // Couple photos — add image URLs (first one is the large tile). Leave [] for placeholders.
+  photos:[],
+
+  dashPassword:"1911"
+};
+/* ================= no need to edit below ================= */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const LS={get:(k,d)=>{try{return JSON.parse(localStorage.getItem('ma_'+k))??d}catch(e){return d}},
+          set:(k,v)=>localStorage.setItem('ma_'+k,JSON.stringify(v))};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+function fa(n){ // arabic-indic digits for nicer AR display
+  return String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+}
+
+/* ---------- opening intro (video) ---------- */
+(function(){
+  const intro=$('#intro');if(!intro)return;
+  const vid=$('#introVideo'), gate=$('#introGate');
+  document.body.classList.add('intro-active');
+  let closed=false, started=false;
+  function endIntro(){
+    if(closed)return;closed=true;
+    try{vid.pause();}catch(e){}
+    intro.classList.add('fade');
+    setTimeout(()=>{intro.classList.add('done');document.body.classList.remove('intro-active');window.scrollTo(0,0);},700);
+    startMusic();               // background song begins after the intro
+    setTimeout(startAutoScroll,3400);  // pause on hero so they can read, then drift down
+    setTimeout(()=>{                    // stop falling petals 30s after entering
+      document.querySelectorAll('.petal').forEach(p=>{
+        const t=getComputedStyle(p).transform;      // freeze current position
+        p.style.transform=(t&&t!=='none')?t:'';
+        p.style.animation='none';
+        void p.offsetWidth;                          // reflow so the fade applies
+        p.style.transition='opacity 1.4s ease';
+        p.style.opacity='0';
+        setTimeout(()=>p.remove(),1500);
+      });
+    },30000);
+  }
+  function playVideo(){
+    if(started)return;started=true;
+    gate.classList.add('hide');
+    vid.muted=false;
+    const p=vid.play();
+    if(p&&p.catch)p.catch(()=>{ vid.muted=true; vid.play().catch(endIntro); });
+    // safety net in case 'ended' never fires
+    vid.addEventListener('loadedmetadata',()=>{ if(isFinite(vid.duration)) setTimeout(endIntro,(vid.duration*1000)+800); });
+    setTimeout(()=>{ if(!closed && (vid.ended || vid.error)) endIntro(); },15000);
+  }
+  vid.addEventListener('ended',endIntro);
+  vid.addEventListener('error',endIntro);
+  $('#openInvite').addEventListener('click',playVideo);
+  $('#skipIntro').addEventListener('click',endIntro);
+})();
+
+/* ---------- language ---------- */
+function setLang(l){
+  document.body.dir = l==='ar'?'rtl':'ltr';
+  document.documentElement.lang=l;
+  LS.set('lang',l);
+}
+setLang(LS.get('lang','ar'));
+$('#langBtn').onclick=()=>setLang(document.body.dir==='rtl'?'en':'ar');
+
+/* ---------- map ---------- */
+$('#mapBtn').href=CONFIG.mapUrl;
+$('#mapFrame').src="https://www.google.com/maps?q="+encodeURIComponent(CONFIG.mapEmbedQuery)+"&output=embed";
+
+/* ---------- countdown ---------- */
+const START=new Date(CONFIG.year,CONFIG.month-1,CONFIG.day,CONFIG.hour,CONFIG.minute,0);
+const END=new Date(START.getTime()+CONFIG.durationHours*3600e3);
+function tick(){
+  let diff=Math.floor((START-new Date())/1000);
+  if(diff<=0){$('#countdown').innerHTML='<div class="cd-box" style="min-width:auto;padding:16px 26px"><div class="cd-num" style="font-family:Great Vibes,cursive;font-size:30px">Today ♥ اليوم</div></div>';return;}
+  const d=Math.floor(diff/86400);diff-=d*86400;
+  const h=Math.floor(diff/3600);diff-=h*3600;
+  const m=Math.floor(diff/60);const s=diff-m*60;
+  const ar=document.body.dir==='rtl';
+  $('#cd-d').textContent=ar?fa(d):d;
+  $('#cd-h').textContent=ar?fa(String(h).padStart(2,'0')):String(h).padStart(2,'0');
+  $('#cd-m').textContent=ar?fa(String(m).padStart(2,'0')):String(m).padStart(2,'0');
+  $('#cd-s').textContent=ar?fa(String(s).padStart(2,'0')):String(s).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+
+/* ---------- add to calendar ---------- */
+function pad(n){return String(n).padStart(2,'0');}
+function ics(dt){return dt.getFullYear()+pad(dt.getMonth()+1)+pad(dt.getDate())+'T'+pad(dt.getHours())+pad(dt.getMinutes())+'00';}
+$('#calBtn').onclick=e=>{
+  e.preventDefault();
+  const title=CONFIG.names_en.join(' & ')+' — Engagement';
+  const loc=CONFIG.venueName_en+', '+CONFIG.hall_en;
+  const body=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//MA//EN","BEGIN:VEVENT","UID:"+Date.now()+"@ma",
+    "DTSTART:"+ics(START),"DTEND:"+ics(END),"SUMMARY:"+title,"LOCATION:"+loc,"DESCRIPTION:See you there!","END:VEVENT","END:VCALENDAR"].join("\r\n");
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([body],{type:'text/calendar'}));
+  a.download="Mazen-Aya-Engagement.ics";a.click();
+  toast(document.body.dir==='rtl'?'أُضيف إلى التقويم 💐':'Added to calendar 💐');
+};
+
+/* ---------- music ---------- */
+const audio=$('#bgAudio');let musicOn=false;
+audio.volume=0.6;
+if(CONFIG.musicUrl){audio.src=CONFIG.musicUrl;}
+function startMusic(){
+  if(!CONFIG.musicUrl||musicOn)return;
+  const p=audio.play();
+  if(p&&p.then)p.then(()=>{musicOn=true;$('#musicBtn').classList.add('active-music');}).catch(()=>{});
+}
+function toggleMusic(){
+  if(!CONFIG.musicUrl){toast(document.body.dir==='rtl'?'أضف رابط موسيقى في الإعدادات':'Add a music URL in CONFIG');return;}
+  if(musicOn){audio.pause();musicOn=false;$('#musicBtn').classList.remove('active-music');}
+  else startMusic();
+}
+$('#musicBtn').onclick=toggleMusic;
+
+/* ---------- RSVP ---------- */
+$('#rsvpForm').onsubmit=e=>{
+  e.preventDefault();
+  const rec={name:$('#rName').value.trim(),
+    count:+$('#rCount').value||1,att:$('input[name=att]:checked').value,ts:Date.now()};
+  if(!rec.name)return;
+  const all=LS.get('rsvps',[]);all.push(rec);LS.set('rsvps',all);
+  const ar=document.body.dir==='rtl';
+  const msg=(rec.att==='yes'
+    ?`✅ تأكيد حضور: ${rec.name} — عدد ${rec.count}`
+    :`سيعتذر عن الحضور: ${rec.name}`)+` | خطوبة مازن و آية`;
+  if(CONFIG.whatsapp.replace(/\D/g,'').length>6){
+    window.open("https://wa.me/"+CONFIG.whatsapp.replace(/\D/g,'')+"?text="+encodeURIComponent(msg),'_blank');
+  }else{
+    window.location.href="mailto:"+CONFIG.rsvpEmail+"?subject="+encodeURIComponent("RSVP — Mazen & Aya")+"&body="+encodeURIComponent(msg);
+  }
+  e.target.reset();$('#rCount').value=1;
+  toast(ar?'شكراً! تم استلام تأكيدكم 💐':'Thank you! Your RSVP is saved 💐');
+};
+
+/* ---------- wishes (private: saved for host, not shown to guests) ---------- */
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+$('#wishForm').onsubmit=e=>{
+  e.preventDefault();
+  const w={name:$('#wName').value.trim(),msg:$('#wMsg').value.trim(),ts:Date.now()};
+  if(!w.name||!w.msg)return;
+  const all=LS.get('wishes',[]);all.push(w);LS.set('wishes',all);
+  e.target.reset();
+  toast(document.body.dir==='rtl'?'وصلت أمنيتكم، شكراً 🤍':'Your wish was received, thank you 🤍');
+};
+
+/* ---------- visit analytics ---------- */
+(function(){const v=LS.get('visits',[]);v.push(Date.now());LS.set('visits',v);})();
+
+/* ---------- personal pass via ?g= ---------- */
+(function(){
+  const p=new URLSearchParams(location.search).get('g');
+  if(!p)return;
+  try{
+    const data=JSON.parse(decodeURIComponent(escape(atob(p.replace(/-/g,'+').replace(/_/g,'/')))));
+    renderPass($('#passArea'),data,true);
+  }catch(e){}
+})();
+function b64(obj){return btoa(unescape(encodeURIComponent(JSON.stringify(obj)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+function renderPass(container,data,personal){
+  container.innerHTML='';
+  const card=document.createElement('div');card.className='pass-card';
+  const ar=document.body.dir==='rtl';
+  card.innerHTML=`<div class="badge">${data.type==='family'?(ar?'تصريح عائلة':'Family pass'):(ar?'تصريح فردي':'Single pass')}${data.count>1?' · '+data.count:''}</div>
+    <div class="qr" id="qr_${data.id}"></div>
+    <div class="pname">${esc(data.name)}</div>
+    <div style="color:var(--muted);font-size:13px;margin-top:4px">${ar?'اعرضوا هذا الكود عند الباب':'Show this code at the door'}</div>`;
+  container.appendChild(card);
+  const holder=card.querySelector('#qr_'+data.id);
+  new QRCode(holder,{text:JSON.stringify({id:data.id,name:data.name,type:data.type,count:data.count}),width:170,height:170,colorDark:'#8e5468',colorLight:'#ffffff'});
+  if(personal){
+    const dl=document.createElement('button');dl.className='btn btn-ghost';dl.style.marginTop='14px';
+    dl.innerHTML='<span class="ar">حفظ التصريح</span><span class="en">Save pass</span>';
+    dl.onclick=()=>downloadPass(holder,data.name);
+    container.appendChild(dl);
+  }
+  return holder;
+}
+function downloadPass(holder,name){
+  const img=holder.querySelector('img')||holder.querySelector('canvas');
+  const src=img.tagName==='IMG'?img.src:img.toDataURL();
+  const a=document.createElement('a');a.href=src;a.download='pass-'+name.replace(/\s+/g,'-')+'.png';a.click();
+}
+
+/* ---------- photo booth ---------- */
+let stream=null,facing='user',curFrame='retro',captured=false;
+function openModal(id){$('#'+id).classList.add('show');}
+function closeModal(id){$('#'+id).classList.remove('show');}
+$$('[data-close]').forEach(b=>b.onclick=()=>{const id=b.dataset.close;closeModal(id);if(id==='camModal')stopCam();if(id==='dashModal')stopScanner();});
+$$('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m){m.classList.remove('show');if(m.id==='camModal')stopCam();if(m.id==='dashModal')stopScanner();}}));
+
+$('#fabCam').onclick=()=>{openModal('camModal');startCam();};
+async function startCam(){
+  resetCam();
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facing},audio:false});
+    $('#camVideo').srcObject=stream;
+  }catch(e){$('#camNote').innerHTML=(document.body.dir==='rtl'?'⚠️ تعذّر الوصول للكاميرا. تأكد من السماح واستخدام رابط آمن (https).':'⚠️ Camera unavailable. Allow access and use a secure (https) link.');}
+}
+function stopCam(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}}
+function resetCam(){captured=false;$('#camVideo').style.display='block';$('#camCanvas').style.display='none';
+  $('#dlPhoto').disabled=true;$('#retakePhoto').style.display='none';$('#sharePhoto').style.display='none';}
+$('#flipCam').onclick=()=>{stopCam();facing=facing==='user'?'environment':'user';startCam();};
+$$('.frame-opt').forEach(o=>o.onclick=()=>{$$('.frame-opt').forEach(x=>x.classList.remove('sel'));o.classList.add('sel');curFrame=o.dataset.frame;if(captured)drawCapture();});
+let lastFrameData=null;
+$('#shutter').onclick=()=>{captured=true;drawCapture();$('#camVideo').style.display='none';$('#camCanvas').style.display='block';
+  $('#dlPhoto').disabled=false;$('#retakePhoto').style.display='';$('#sharePhoto').style.display='';};
+$('#retakePhoto').onclick=()=>resetCam();
+function drawCapture(){
+  const v=$('#camVideo'),c=$('#camCanvas');const W=900,H=1200;c.width=W;c.height=H;
+  const ctx=c.getContext('2d');
+  // cover-fit video
+  const vw=v.videoWidth||3,vh=v.videoHeight||4;const s=Math.max(W/vw,H/vh);
+  const dw=vw*s,dh=vh*s;
+  ctx.save();
+  if(facing==='user'){ctx.translate(W,0);ctx.scale(-1,1);}
+  ctx.drawImage(v,(W-dw)/2*(facing==='user'?-1:1)*0+(W-dw)/2,(H-dh)/2,dw,dh);
+  ctx.restore();
+  drawFrame(ctx,W,H,curFrame);
+}
+function drawFrame(ctx,W,H,f){
+  const cap='Mazen ♥ Aya   •   30·07·2026';
+  if(f==='retro'){
+    ctx.strokeStyle='#fffaf5';ctx.lineWidth=46;ctx.strokeRect(23,23,W-46,H-46);
+    ctx.fillStyle='rgba(255,250,245,.96)';ctx.fillRect(0,H-150,W,150);
+    ctx.fillStyle='#8e5468';ctx.font='600 42px Cormorant Garamond, serif';ctx.textAlign='center';ctx.fillText(cap,W/2,H-95);
+    ctx.fillStyle='#c9a86a';ctx.font='26px Jost, sans-serif';ctx.fillText('New Land Resort · Celia Hall',W/2,H-55);
+  }else if(f==='gold'){
+    const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#e6c883');g.addColorStop(1,'#b58e3f');
+    ctx.strokeStyle=g;ctx.lineWidth=34;ctx.strokeRect(17,17,W-34,H-34);
+    ctx.strokeStyle='#fff';ctx.lineWidth=4;ctx.strokeRect(48,48,W-96,H-96);
+    ctx.fillStyle='#b58e3f';ctx.font='600 44px Cormorant Garamond, serif';ctx.textAlign='center';ctx.fillText(cap,W/2,H-60);
+  }else if(f==='film'){
+    ctx.fillStyle='#1c1c1c';ctx.fillRect(0,0,60,H);ctx.fillRect(W-60,0,60,H);
+    ctx.fillStyle='#fff';for(let y=20;y<H;y+=70){ctx.fillRect(16,y,28,40);ctx.fillRect(W-44,y,28,40);}
+    ctx.fillStyle='#fff';ctx.font='600 40px Jost, sans-serif';ctx.textAlign='center';
+    ctx.fillText(cap,W/2,H-40);
+  }else{ // floral
+    ctx.strokeStyle='#e7a9b4';ctx.lineWidth=30;ctx.strokeRect(15,15,W-30,H-30);
+    const dots=[[70,70,'#e7a9b4'],[120,60,'#f0bcc6'],[60,120,'#d98d9c'],[W-70,70,'#e7a9b4'],[W-120,60,'#9ab89a'],[70,H-70,'#9ab89a'],[W-70,H-70,'#e7a9b4'],[W-120,H-60,'#f0bcc6']];
+    dots.forEach(([x,y,c])=>{ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,26,0,7);ctx.fill();ctx.fillStyle='#c9a86a';ctx.beginPath();ctx.arc(x,y,9,0,7);ctx.fill();});
+    ctx.fillStyle='#8e5468';ctx.font='600 44px El Messiri, serif';ctx.textAlign='center';ctx.fillText(cap,W/2,H-55);
+  }
+}
+$('#dlPhoto').onclick=()=>{const a=document.createElement('a');a.href=$('#camCanvas').toDataURL('image/png');a.download='Mazen-Aya-photobooth.png';a.click();toast(document.body.dir==='rtl'?'تم الحفظ 📸':'Saved 📸');};
+$('#sharePhoto').onclick=async()=>{
+  $('#camCanvas').toBlob(async b=>{
+    const file=new File([b],'mazen-aya.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      try{await navigator.share({files:[file],title:'Mazen & Aya',text:'From Mazen & Aya’s engagement 💐'});}catch(e){}
+    }else{$('#dlPhoto').click();toast(document.body.dir==='rtl'?'المشاركة غير مدعومة — تم الحفظ بدلاً':'Sharing not supported — saved instead');}
+  },'image/png');
+};
+
+/* ---------- dashboard ---------- */
+$('#hostBtn').onclick=()=>{openModal('dashModal');$('#dashLogin').style.display='';$('#dashPanel').style.display='none';$('#dashPass').value='';};
+$('#dashEnter').onclick=()=>{
+  if($('#dashPass').value===CONFIG.dashPassword){$('#dashLogin').style.display='none';$('#dashPanel').style.display='';renderDash();}
+  else toast(document.body.dir==='rtl'?'كلمة المرور غير صحيحة':'Wrong password');
+};
+$('#dashPass').addEventListener('keydown',e=>{if(e.key==='Enter')$('#dashEnter').click();});
+$$('.tabbar button').forEach(b=>b.onclick=()=>{
+  $$('.tabbar button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  $$('.tabpane').forEach(p=>p.classList.remove('on'));$('#'+b.dataset.tab).classList.add('on');
+  if(b.dataset.tab==='tScan'){/*ready*/}else stopScanner();
+});
+function renderDash(){
+  const rsvps=LS.get('rsvps',[]),wishes=LS.get('wishes',[]),visits=LS.get('visits',[]),checks=LS.get('checks',{});
+  const yes=rsvps.filter(r=>r.att==='yes');
+  const heads=yes.reduce((a,r)=>a+(+r.count||1),0);
+  $('#sVisits').textContent=visits.length;
+  $('#sYes').textContent=yes.length;
+  $('#sGuests').textContent=heads;
+  $('#sCheck').textContent=Object.values(checks).reduce((a,c)=>a+(c.count||1),0);
+  // RSVP list
+  $('#rsvpAdmin').innerHTML=rsvps.length?rsvps.slice().reverse().map(r=>
+    `<div class="list-item"><div><b>${esc(r.name)}</b> ${r.att==='yes'?'✅':'❌'} ·  ${r.count} <br><span class="r">${r.phone||''}</span></div><div class="r">${new Date(r.ts).toLocaleDateString()}</div></div>`).join('')
+    :'<div class="empty">No RSVPs yet</div>';
+  $('#wishAdmin').innerHTML=wishes.length?wishes.slice().reverse().map(w=>
+    `<div class="list-item"><div><b>${esc(w.name)}</b><br>${esc(w.msg)}</div></div>`).join(''):'<div class="empty">No wishes yet</div>';
+  renderPassListAdmin();
+  // insights chart
+  const buckets=new Array(7).fill(0);const now=Date.now();
+  visits.forEach(ts=>{const days=Math.floor((now-ts)/86400e3);if(days<7)buckets[6-days]++;});
+  const mx=Math.max(1,...buckets);
+  $('#visitChart').innerHTML=buckets.map(v=>`<div class="bar" style="height:${(v/mx*100)}%"></div>`).join('');
+  $('#liveCount').textContent=$('#sCheck').textContent;
+}
+// pass type toggle
+$$('input[name=ptype]').forEach(r=>r.onchange=()=>{$('#pcountWrap').style.display=$('input[name=ptype]:checked').value==='family'?'':'none';});
+$('#genPass').onclick=()=>{
+  const name=$('#pgName').value.trim();if(!name){toast('Enter a name');return;}
+  const type=$('input[name=ptype]:checked').value;
+  const count=type==='family'?(+$('#pgCount').value||2):1;
+  const id='P'+Date.now().toString(36);
+  const data={id,name,type,count};
+  const passes=LS.get('passes',[]);passes.push(data);LS.set('passes',passes);
+  const holder=renderPass($('#passOut'),data,false);
+  // build shareable link
+  const link=location.origin+location.pathname+'?g='+b64(data);
+  const wrap=document.createElement('div');wrap.className='btn-row';
+  const dl=document.createElement('button');dl.className='btn btn-ghost';dl.innerHTML='<span class="ar">حفظ الكود</span><span class="en">Save QR</span>';
+  dl.onclick=()=>downloadPass(holder,name);
+  const cp=document.createElement('button');cp.className='btn btn-primary';cp.innerHTML='<span class="ar">نسخ رابط الضيف</span><span class="en">Copy guest link</span>';
+  cp.onclick=()=>{navigator.clipboard.writeText(link).then(()=>toast('Link copied'));};
+  wrap.append(dl,cp);$('#passOut').appendChild(wrap);
+  renderPassListAdmin();$('#pgName').value='';
+};
+function renderPassListAdmin(){
+  const passes=LS.get('passes',[]),checks=LS.get('checks',{});
+  $('#passListAdmin').innerHTML=passes.length?passes.slice().reverse().map(p=>
+    `<div class="list-item"><div><b>${esc(p.name)}</b> · ${p.type==='family'?'👨‍👩‍👧 '+p.count:'1'}</div><div class="r">${checks[p.id]?'✅ in':'—'}</div></div>`).join(''):'<div class="empty">No passes created</div>';
+}
+/* ---------- scanner ---------- */
+let scanner=null;
+$('#startScan').onclick=()=>{
+  if(scanner){stopScanner();$('#startScan').innerHTML='<span class="ar">ابدأ المسح</span><span class="en">Start scanner</span>';return;}
+  $('#scanBox').style.display='';
+  scanner=new Html5Qrcode('reader');
+  scanner.start({facingMode:'environment'},{fps:10,qrbox:220},onScan,()=>{}).then(()=>{
+    $('#startScan').innerHTML='<span class="ar">إيقاف</span><span class="en">Stop scanner</span>';
+  }).catch(e=>{$('#scanResult').innerHTML='<div class="scan-result dup">Camera error — use https + allow access</div>';});
+};
+function stopScanner(){if(scanner){scanner.stop().then(()=>{scanner.clear();scanner=null;$('#scanBox').style.display='none';}).catch(()=>{scanner=null;});}}
+let lastScan=0;
+function onScan(txt){
+  const now=Date.now();if(now-lastScan<1500)return;lastScan=now;
+  let data;try{data=JSON.parse(txt);}catch(e){show(false,'Invalid code');return;}
+  if(!data.id){show(false,'Invalid pass');return;}
+  const checks=LS.get('checks',{});
+  if(checks[data.id]){show(false,(data.name||'Guest')+' — already checked in!');return;}
+  checks[data.id]={name:data.name,type:data.type,count:data.count||1,ts:now};LS.set('checks',checks);
+  show(true,(data.name||'Guest')+' ✓ '+(data.type==='family'?('('+data.count+')'):''));
+  const total=Object.values(checks).reduce((a,c)=>a+(c.count||1),0);
+  $('#liveCount').textContent=total;$('#sCheck').textContent=total;renderPassListAdmin();
+  if(navigator.vibrate)navigator.vibrate(120);
+}
+function show(ok,msg){$('#scanResult').innerHTML=`<div class="scan-result ${ok?'ok':'dup'}">${esc(msg)}</div>`;}
+$('#wipeData').onclick=()=>{if(confirm('Clear ALL saved data on this device?')){['rsvps','wishes','visits','passes','checks'].forEach(k=>localStorage.removeItem('ma_'+k));renderDash();toast('Cleared');}};
+
+/* ---------- falling petals ---------- */
+(function(){
+  const colors=['#e7a9b4','#f0bcc6','#d98d9c','#9ab89a','#c9a86a'];
+  const N=window.innerWidth<480?12:18;
+  for(let i=0;i<N;i++){
+    const p=document.createElement('div');p.className='petal';
+    const size=8+Math.random()*13;
+    p.style.left=Math.random()*100+'vw';
+    p.style.animationDuration=(7+Math.random()*8)+'s';
+    p.style.animationDelay=(Math.random()*8)+'s';
+    const c=colors[Math.floor(Math.random()*colors.length)];
+    p.innerHTML='<svg width="'+size+'" height="'+size+'" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="5" ry="9" fill="'+c+'"/></svg>';
+    document.body.appendChild(p);
+  }
+})();
+
+/* ---------- gentle auto-scroll (stops on user interaction) ---------- */
+let autoOn=false, autoRAF=null;
+function stopAutoScroll(){
+  if(!autoOn)return;
+  autoOn=false;
+  if(autoRAF)cancelAnimationFrame(autoRAF);
+  autoRAF=null;
+  document.documentElement.style.scrollBehavior='';
+}
+function startAutoScroll(){
+  if(autoOn)return;
+  autoOn=true;
+  document.documentElement.style.scrollBehavior='auto'; // avoid fighting CSS smooth
+  const SPEED=46;               // px per second — slow, readable pace
+  let last=null, pos=window.scrollY||0;
+  function step(ts){
+    if(!autoOn)return;
+    if(last===null)last=ts;
+    const dt=(ts-last)/1000; last=ts;
+    pos+=SPEED*dt;
+    window.scrollTo(0,pos);
+    const max=document.documentElement.scrollHeight-window.innerHeight;
+    if(pos>=max-1){stopAutoScroll();return;}
+    autoRAF=requestAnimationFrame(step);
+  }
+  autoRAF=requestAnimationFrame(step);
+}
+// any real user input turns it off (programmatic scrollTo does NOT fire these)
+['wheel','touchstart','pointerdown','mousedown','keydown'].forEach(ev=>
+  window.addEventListener(ev,stopAutoScroll,{passive:true}));
+
+/* ---------- scroll reveal ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+$$('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
