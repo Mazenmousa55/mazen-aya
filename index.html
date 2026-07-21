@@ -12,6 +12,8 @@
 <!-- QR generation + scanning -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js" defer></script>
+<!-- Supabase (shared live dashboard) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --bg:#faf6f2; --bg2:#f3eae3; --paper:#fffdfb;
@@ -543,12 +545,38 @@ const CONFIG = {
   // Couple photos — add image URLs (first one is the large tile). Leave [] for placeholders.
   photos:[],
 
+  // Shared live dashboard backend (optional). Paste your Supabase Project URL + anon public key.
+  // Leave url:"" to store data on this device only.
+  supabase:{ url:"https://aydqkmqheiwaqgajgaac.supabase.co", anonKey:"sb_publishable_sjqxeaaUV6ImjQZzXFO__g_TFW3h1fy" },
+
   dashPassword:"1911"
 };
 /* ================= no need to edit below ================= */
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const LS={get:(k,d)=>{try{return JSON.parse(localStorage.getItem('ma_'+k))??d}catch(e){return d}},
           set:(k,v)=>localStorage.setItem('ma_'+k,JSON.stringify(v))};
+
+/* ---------- data layer: Supabase (shared live dashboard) or localStorage (offline fallback) ---------- */
+const SB = (window.supabase && CONFIG.supabase && CONFIG.supabase.url)
+  ? window.supabase.createClient(CONFIG.supabase.url, CONFIG.supabase.anonKey) : null;
+const DB = {
+  useSB: !!SB,
+  async addRsvp(r){ if(SB){try{await SB.from('rsvps').insert({name:r.name,count:r.count,att:r.att});return;}catch(e){}} const a=LS.get('rsvps',[]);a.push({name:r.name,count:r.count,att:r.att,ts:Date.now()});LS.set('rsvps',a); },
+  async getRsvps(){ if(SB){try{const {data}=await SB.from('rsvps').select('*').order('created_at',{ascending:true});return (data||[]).map(x=>({name:x.name,count:x.count,att:x.att,ts:new Date(x.created_at).getTime()}));}catch(e){}} return LS.get('rsvps',[]); },
+  async addWish(w){ if(SB){try{await SB.from('wishes').insert({name:w.name,msg:w.msg});return;}catch(e){}} const a=LS.get('wishes',[]);a.push({name:w.name,msg:w.msg,ts:Date.now()});LS.set('wishes',a); },
+  async getWishes(){ if(SB){try{const {data}=await SB.from('wishes').select('*').order('created_at',{ascending:true});return (data||[]).map(x=>({name:x.name,msg:x.msg,ts:new Date(x.created_at).getTime()}));}catch(e){}} return LS.get('wishes',[]); },
+  async addVisit(){ if(SB){try{await SB.from('visits').insert({});return;}catch(e){}} const v=LS.get('visits',[]);v.push(Date.now());LS.set('visits',v); },
+  async getVisits(){ if(SB){try{const {data}=await SB.from('visits').select('created_at');return (data||[]).map(x=>new Date(x.created_at).getTime());}catch(e){}} return LS.get('visits',[]); },
+  async addPass(p){ if(SB){try{await SB.from('passes').insert({pass_id:p.id,name:p.name,type:p.type,count:p.count});return;}catch(e){}} const a=LS.get('passes',[]);a.push(p);LS.set('passes',a); },
+  async getPasses(){ if(SB){try{const {data}=await SB.from('passes').select('*').order('created_at',{ascending:true});return (data||[]).map(x=>({id:x.pass_id,name:x.name,type:x.type,count:x.count}));}catch(e){}} return LS.get('passes',[]); },
+  async addCheckin(c){
+    if(SB){ try{ const {error}=await SB.from('checkins').insert({pass_id:c.id,name:c.name,type:c.type,count:c.count});
+      if(error){ if(error.code==='23505'||/duplicate|unique/i.test(error.message||'')) return {duplicate:true}; return {error:error.message}; }
+      return {ok:true}; }catch(e){ return {error:String(e)}; } }
+    const checks=LS.get('checks',{}); if(checks[c.id]) return {duplicate:true};
+    checks[c.id]={name:c.name,type:c.type,count:c.count,ts:Date.now()};LS.set('checks',checks); return {ok:true}; },
+  async getCheckins(){ if(SB){try{const {data}=await SB.from('checkins').select('*');return (data||[]).map(x=>({id:x.pass_id,name:x.name,type:x.type,count:x.count}));}catch(e){}} const checks=LS.get('checks',{}); return Object.entries(checks).map(([id,v])=>({id,name:v.name,type:v.type,count:v.count})); }
+};
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
 function fa(n){ // arabic-indic digits for nicer AR display
   return String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
@@ -656,38 +684,33 @@ function toggleMusic(){
 $('#musicBtn').onclick=toggleMusic;
 
 /* ---------- RSVP ---------- */
-$('#rsvpForm').onsubmit=e=>{
+$('#rsvpForm').onsubmit=async e=>{
   e.preventDefault();
-  const rec={name:$('#rName').value.trim(),
-    count:+$('#rCount').value||1,att:$('input[name=att]:checked').value,ts:Date.now()};
+  const rec={name:$('#rName').value.trim(),count:+$('#rCount').value||1,att:$('input[name=att]:checked').value};
   if(!rec.name)return;
-  const all=LS.get('rsvps',[]);all.push(rec);LS.set('rsvps',all);
+  const btn=e.target.querySelector('button[type=submit]');if(btn)btn.disabled=true;
   const ar=document.body.dir==='rtl';
-  const msg=(rec.att==='yes'
-    ?`✅ تأكيد حضور: ${rec.name} — عدد ${rec.count}`
-    :`سيعتذر عن الحضور: ${rec.name}`)+` | خطوبة مازن و آية`;
-  if(CONFIG.whatsapp.replace(/\D/g,'').length>6){
-    window.open("https://wa.me/"+CONFIG.whatsapp.replace(/\D/g,'')+"?text="+encodeURIComponent(msg),'_blank');
-  }else{
-    window.location.href="mailto:"+CONFIG.rsvpEmail+"?subject="+encodeURIComponent("RSVP — Mazen & Aya")+"&body="+encodeURIComponent(msg);
-  }
+  await DB.addRsvp(rec);
+  if(btn)btn.disabled=false;
   e.target.reset();$('#rCount').value=1;
   toast(ar?'شكراً! تم استلام تأكيدكم 💐':'Thank you! Your RSVP is saved 💐');
 };
 
 /* ---------- wishes (private: saved for host, not shown to guests) ---------- */
 function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-$('#wishForm').onsubmit=e=>{
+$('#wishForm').onsubmit=async e=>{
   e.preventDefault();
-  const w={name:$('#wName').value.trim(),msg:$('#wMsg').value.trim(),ts:Date.now()};
+  const w={name:$('#wName').value.trim(),msg:$('#wMsg').value.trim()};
   if(!w.name||!w.msg)return;
-  const all=LS.get('wishes',[]);all.push(w);LS.set('wishes',all);
+  const btn=e.target.querySelector('button[type=submit]');if(btn)btn.disabled=true;
+  await DB.addWish(w);
+  if(btn)btn.disabled=false;
   e.target.reset();
   toast(document.body.dir==='rtl'?'وصلت أمنيتكم، شكراً 🤍':'Your wish was received, thank you 🤍');
 };
 
 /* ---------- visit analytics ---------- */
-(function(){const v=LS.get('visits',[]);v.push(Date.now());LS.set('visits',v);})();
+(async function(){try{await DB.addVisit();}catch(e){}})();
 
 /* ---------- personal pass via ?g= ---------- */
 (function(){
@@ -806,37 +829,38 @@ $$('.tabbar button').forEach(b=>b.onclick=()=>{
   $$('.tabpane').forEach(p=>p.classList.remove('on'));$('#'+b.dataset.tab).classList.add('on');
   if(b.dataset.tab==='tScan'){/*ready*/}else stopScanner();
 });
-function renderDash(){
-  const rsvps=LS.get('rsvps',[]),wishes=LS.get('wishes',[]),visits=LS.get('visits',[]),checks=LS.get('checks',{});
+async function renderDash(){
+  const [rsvps,wishes,visits,checks,passes]=await Promise.all([DB.getRsvps(),DB.getWishes(),DB.getVisits(),DB.getCheckins(),DB.getPasses()]);
   const yes=rsvps.filter(r=>r.att==='yes');
   const heads=yes.reduce((a,r)=>a+(+r.count||1),0);
+  const checkedTotal=checks.reduce((a,c)=>a+(c.count||1),0);
   $('#sVisits').textContent=visits.length;
   $('#sYes').textContent=yes.length;
   $('#sGuests').textContent=heads;
-  $('#sCheck').textContent=Object.values(checks).reduce((a,c)=>a+(c.count||1),0);
+  $('#sCheck').textContent=checkedTotal;
   // RSVP list
   $('#rsvpAdmin').innerHTML=rsvps.length?rsvps.slice().reverse().map(r=>
-    `<div class="list-item"><div><b>${esc(r.name)}</b> ${r.att==='yes'?'✅':'❌'} ·  ${r.count} <br><span class="r">${r.phone||''}</span></div><div class="r">${new Date(r.ts).toLocaleDateString()}</div></div>`).join('')
+    `<div class="list-item"><div><b>${esc(r.name)}</b> ${r.att==='yes'?'✅':'❌'} ·  ${r.count}</div><div class="r">${new Date(r.ts).toLocaleDateString()}</div></div>`).join('')
     :'<div class="empty">No RSVPs yet</div>';
   $('#wishAdmin').innerHTML=wishes.length?wishes.slice().reverse().map(w=>
     `<div class="list-item"><div><b>${esc(w.name)}</b><br>${esc(w.msg)}</div></div>`).join(''):'<div class="empty">No wishes yet</div>';
-  renderPassListAdmin();
+  renderPassListAdmin(passes,checks);
   // insights chart
   const buckets=new Array(7).fill(0);const now=Date.now();
   visits.forEach(ts=>{const days=Math.floor((now-ts)/86400e3);if(days<7)buckets[6-days]++;});
   const mx=Math.max(1,...buckets);
   $('#visitChart').innerHTML=buckets.map(v=>`<div class="bar" style="height:${(v/mx*100)}%"></div>`).join('');
-  $('#liveCount').textContent=$('#sCheck').textContent;
+  $('#liveCount').textContent=checkedTotal;
 }
 // pass type toggle
 $$('input[name=ptype]').forEach(r=>r.onchange=()=>{$('#pcountWrap').style.display=$('input[name=ptype]:checked').value==='family'?'':'none';});
-$('#genPass').onclick=()=>{
+$('#genPass').onclick=async ()=>{
   const name=$('#pgName').value.trim();if(!name){toast('Enter a name');return;}
   const type=$('input[name=ptype]:checked').value;
   const count=type==='family'?(+$('#pgCount').value||2):1;
   const id='P'+Date.now().toString(36);
   const data={id,name,type,count};
-  const passes=LS.get('passes',[]);passes.push(data);LS.set('passes',passes);
+  await DB.addPass(data);
   const holder=renderPass($('#passOut'),data,false);
   // build shareable link
   const link=location.origin+location.pathname+'?g='+b64(data);
@@ -846,12 +870,14 @@ $('#genPass').onclick=()=>{
   const cp=document.createElement('button');cp.className='btn btn-primary';cp.innerHTML='<span class="ar">نسخ رابط الضيف</span><span class="en">Copy guest link</span>';
   cp.onclick=()=>{navigator.clipboard.writeText(link).then(()=>toast('Link copied'));};
   wrap.append(dl,cp);$('#passOut').appendChild(wrap);
-  renderPassListAdmin();$('#pgName').value='';
+  await renderPassListAdmin();$('#pgName').value='';
 };
-function renderPassListAdmin(){
-  const passes=LS.get('passes',[]),checks=LS.get('checks',{});
+async function renderPassListAdmin(passes,checks){
+  if(!passes) passes=await DB.getPasses();
+  if(!checks) checks=await DB.getCheckins();
+  const inSet=new Set(checks.map(c=>c.id));
   $('#passListAdmin').innerHTML=passes.length?passes.slice().reverse().map(p=>
-    `<div class="list-item"><div><b>${esc(p.name)}</b> · ${p.type==='family'?'👨‍👩‍👧 '+p.count:'1'}</div><div class="r">${checks[p.id]?'✅ in':'—'}</div></div>`).join(''):'<div class="empty">No passes created</div>';
+    `<div class="list-item"><div><b>${esc(p.name)}</b> · ${p.type==='family'?'👨‍👩‍👧 '+p.count:'1'}</div><div class="r">${inSet.has(p.id)?'✅ in':'—'}</div></div>`).join(''):'<div class="empty">No passes created</div>';
 }
 /* ---------- scanner ---------- */
 let scanner=null;
@@ -865,20 +891,24 @@ $('#startScan').onclick=()=>{
 };
 function stopScanner(){if(scanner){scanner.stop().then(()=>{scanner.clear();scanner=null;$('#scanBox').style.display='none';}).catch(()=>{scanner=null;});}}
 let lastScan=0;
-function onScan(txt){
+async function onScan(txt){
   const now=Date.now();if(now-lastScan<1500)return;lastScan=now;
   let data;try{data=JSON.parse(txt);}catch(e){show(false,'Invalid code');return;}
   if(!data.id){show(false,'Invalid pass');return;}
-  const checks=LS.get('checks',{});
-  if(checks[data.id]){show(false,(data.name||'Guest')+' — already checked in!');return;}
-  checks[data.id]={name:data.name,type:data.type,count:data.count||1,ts:now};LS.set('checks',checks);
-  show(true,(data.name||'Guest')+' ✓ '+(data.type==='family'?('('+data.count+')'):''));
-  const total=Object.values(checks).reduce((a,c)=>a+(c.count||1),0);
-  $('#liveCount').textContent=total;$('#sCheck').textContent=total;renderPassListAdmin();
+  const res=await DB.addCheckin({id:data.id,name:data.name,type:data.type,count:data.count||1});
+  if(res.duplicate){show(false,(data.name||'Guest')+' — already checked in!');return;}
+  if(res.error){show(false,'Error — try again');return;}
+  show(true,(data.name||'Guest')+' ✓ '+(data.type==='family'?('('+(data.count||1)+')'):''));
+  const checks=await DB.getCheckins();
+  const total=checks.reduce((a,c)=>a+(c.count||1),0);
+  $('#liveCount').textContent=total;$('#sCheck').textContent=total;await renderPassListAdmin();
   if(navigator.vibrate)navigator.vibrate(120);
 }
 function show(ok,msg){$('#scanResult').innerHTML=`<div class="scan-result ${ok?'ok':'dup'}">${esc(msg)}</div>`;}
-$('#wipeData').onclick=()=>{if(confirm('Clear ALL saved data on this device?')){['rsvps','wishes','visits','passes','checks'].forEach(k=>localStorage.removeItem('ma_'+k));renderDash();toast('Cleared');}};
+$('#wipeData').onclick=async ()=>{
+  if(DB.useSB){ if(confirm('Your data is stored in the cloud (Supabase). To erase it, use the Table editor in your Supabase dashboard. This button only clears this device’s local cache.')){['rsvps','wishes','visits','passes','checks'].forEach(k=>localStorage.removeItem('ma_'+k));await renderDash();toast('Local cache cleared');} return; }
+  if(confirm('Clear ALL saved data on this device?')){['rsvps','wishes','visits','passes','checks'].forEach(k=>localStorage.removeItem('ma_'+k));await renderDash();toast('Cleared');}
+};
 
 /* ---------- falling petals ---------- */
 (function(){
