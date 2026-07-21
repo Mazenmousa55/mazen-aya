@@ -130,6 +130,59 @@ body[dir="ltr"] h2.title{font-family:'Cormorant Garamond',serif;font-weight:600;
 .wish .time{color:var(--muted);font-size:12px;margin-top:5px;font-family:'Jost',sans-serif;}
 .empty{color:var(--muted);font-size:14px;padding:16px;}
 
+/* ===== combined RSVP card (reference-styled, floral palette) ===== */
+.rsvp-card{background:linear-gradient(180deg,#fffdfb,#fef7f3);border:1px solid rgba(201,168,106,.4);
+  border-radius:24px;padding:34px 26px;box-shadow:var(--shadow);text-align:start;position:relative;overflow:hidden;}
+.rsvp-card::before{content:"";position:absolute;inset:9px;border:1px solid rgba(201,168,106,.28);border-radius:18px;pointer-events:none;}
+.fld{position:relative;z-index:1;margin-bottom:26px;}
+.fld:last-of-type{margin-bottom:28px;}
+.fld > label{display:block;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+  color:#b0894e;margin-bottom:14px;font-weight:500;}
+.line-input{width:100%;border:none;border-bottom:1.5px solid rgba(142,84,104,.28);background:transparent;
+  font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);padding:6px 2px;transition:border-color .2s;}
+body[dir="rtl"] .line-input{font-family:'El Messiri',serif;font-size:20px;}
+.line-input::placeholder{color:#cbb9bf;}
+.line-input:focus{outline:none;border-bottom-color:var(--gold);}
+.attend-toggle{display:flex;gap:12px;flex-wrap:wrap;}
+.att-pill{flex:1;min-width:130px;position:relative;cursor:pointer;}
+.att-pill input{position:absolute;opacity:0;pointer-events:none;}
+.att-pill span{display:block;text-align:center;padding:15px 14px;border-radius:40px;border:1.5px solid rgba(201,168,106,.55);
+  background:#fff;color:var(--accent-deep);font-family:'Cormorant Garamond',serif;font-size:19px;transition:.2s;}
+body[dir="rtl"] .att-pill span{font-family:'El Messiri',serif;font-size:17px;}
+.att-pill input:checked + span{background:linear-gradient(135deg,#c9a86a,#b0894e);color:#fff;border-color:#b0894e;
+  box-shadow:0 12px 26px -12px rgba(176,137,78,.6);}
+.guests-row{display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.guests-row > label{margin-bottom:0;flex:1;}
+.stepper{display:flex;align-items:center;gap:16px;}
+.step{width:54px;height:54px;border-radius:50%;border:1.5px solid rgba(201,168,106,.6);background:#fff;
+  color:var(--accent-deep);font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;transition:.15s;}
+.step:hover{background:#fbeef0;border-color:var(--gold);}
+.step:active{transform:scale(.92);}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--wine);min-width:26px;text-align:center;}
+.box-input{width:100%;border:1.5px solid rgba(142,84,104,.22);border-radius:16px;background:#fffdfc;
+  font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ink);padding:14px 16px;resize:vertical;transition:.2s;}
+body[dir="rtl"] .box-input{font-family:'El Messiri',serif;font-size:16px;}
+.box-input::placeholder{color:#cbb9bf;}
+.box-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,106,.15);}
+.btn-send{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#3a2f2b,#2b2320);color:#fdf7ef;border-radius:44px;padding:19px 20px;
+  font-family:'Jost',sans-serif;font-size:16px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;
+  box-shadow:0 18px 38px -14px rgba(43,35,32,.7);transition:transform .15s,box-shadow .25s;}
+body[dir="rtl"] .btn-send{font-family:'El Messiri',serif;letter-spacing:.02em;font-size:18px;text-transform:none;}
+.btn-send:hover{box-shadow:0 22px 44px -14px rgba(43,35,32,.8);}
+.btn-send:active{transform:scale(.98);}
+.btn-send:disabled{opacity:.6;cursor:default;}
+.btn-send .diamond{color:var(--gold);font-size:14px;}
+/* QR confirmation after RSVP */
+.reveal-result{margin-top:22px;}
+.confirm-card{background:linear-gradient(160deg,#fff,#fbeef1);border:1px solid rgba(201,168,106,.45);border-radius:22px;
+  padding:26px 22px;text-align:center;box-shadow:var(--shadow);animation:introUp .7s ease both;}
+.confirm-card h3{font-family:'El Messiri',serif;color:var(--wine);font-size:24px;margin-bottom:6px;}
+body[dir="ltr"] .confirm-card h3{font-family:'Great Vibes',cursive;font-size:34px;}
+.confirm-card .sub{color:var(--rose-deep);font-size:16px;margin-bottom:6px;}
+.confirm-card .hint{color:var(--muted);font-size:14px;margin-top:4px;}
+
 /* floating camera button */
 .fab{position:fixed;inset-inline-end:16px;bottom:18px;z-index:45;width:62px;height:62px;border-radius:50%;
   background:linear-gradient(135deg,var(--accent),var(--accent-deep));color:#fff;border:none;cursor:pointer;
@@ -377,38 +430,53 @@ body[dir="ltr"] .gate-btn{font-family:'Cormorant Garamond',serif;font-size:20px;
   <div class="map-embed"><iframe id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
 </section>
 
-<!-- RSVP -->
-<section class="reveal">
+<!-- RSVP + MESSAGE (combined) -->
+<section class="reveal" id="rsvpSection">
   <div class="kicker"><span class="ar">تأكيد الحضور</span><span class="en">RSVP</span></div>
   <h2 class="title"><span class="ar">هل ستشاركوننا الفرحة؟</span><span class="en">Will you join us?</span></h2>
   <div class="rule"></div>
-  <form class="form" id="rsvpForm">
-    <div class="field"><label><span class="ar">الاسم</span><span class="en">Your name</span></label><input required id="rName" /></div>
-    <div class="field"><label><span class="ar">عدد الأشخاص</span><span class="en">Number of guests</span></label><input type="number" id="rCount" min="1" value="1" /></div>
-    <div class="field"><label><span class="ar">الحضور</span><span class="en">Attending?</span></label>
-      <div class="seg">
-        <label><input type="radio" name="att" value="yes" checked><span class="ar">سأحضر ✓</span><span class="en">Yes ✓</span></label>
-        <label><input type="radio" name="att" value="no"><span class="ar">أعتذر</span><span class="en">Can't make it</span></label>
+
+  <form class="rsvp-card" id="rsvpForm">
+    <div class="fld">
+      <label><span class="ar">اسمكم</span><span class="en">Your name</span></label>
+      <input class="line-input" id="rName" required placeholder="..." autocomplete="name" />
+    </div>
+
+    <div class="fld">
+      <label><span class="ar">هل ستحضرون؟</span><span class="en">Will you attend?</span></label>
+      <div class="attend-toggle">
+        <label class="att-pill"><input type="radio" name="att" value="yes" checked><span class="ar">سأحضر بكل سعادة</span><span class="en">Joyfully yes</span></label>
+        <label class="att-pill"><input type="radio" name="att" value="no"><span class="ar">أعتذر</span><span class="en">Sadly can't</span></label>
       </div>
     </div>
-    <button class="btn btn-primary" type="submit" style="width:100%"><span class="ar">إرسال التأكيد</span><span class="en">Send RSVP</span></button>
+
+    <div class="fld guests-row" id="guestsRow">
+      <label><span class="ar">عدد الأشخاص</span><span class="en">Number of guests</span></label>
+      <div class="stepper">
+        <button type="button" class="step" id="gMinus" aria-label="minus">−</button>
+        <span class="step-num" id="gNum">1</span>
+        <button type="button" class="step" id="gPlus" aria-label="plus">+</button>
+      </div>
+      <input type="hidden" id="rCount" value="1" />
+    </div>
+
+    <div class="fld">
+      <label><span class="ar">رسالة (اختياري)</span><span class="en">A message</span></label>
+      <textarea class="box-input" id="wMsg" rows="3" placeholder="..."></textarea>
+    </div>
+
+    <button class="btn-send" type="submit">
+      <span class="diamond">◆</span>
+      <span class="ar">إرسال وتأكيد الحضور</span><span class="en">Send &amp; RSVP</span>
+    </button>
   </form>
+
+  <!-- the guest's QR entry pass appears here automatically after confirming -->
+  <div id="rsvpResult" class="reveal-result"></div>
 </section>
 
-<!-- WISHES -->
-<section class="reveal">
-  <div class="kicker"><span class="ar">كلمات من القلب</span><span class="en">Guest Wishes</span></div>
-  <h2 class="title"><span class="ar">اتركوا لنا أمنية</span><span class="en">Leave us a wish</span></h2>
-  <div class="rule"></div>
-  <form class="form" id="wishForm">
-    <div class="field"><label><span class="ar">اسمكم</span><span class="en">Your name</span></label><input required id="wName" /></div>
-    <div class="field"><label><span class="ar">رسالتكم</span><span class="en">Your message</span></label><textarea required id="wMsg" rows="3"></textarea></div>
-    <button class="btn btn-primary" type="submit" style="width:100%"><span class="ar">إرسال الأمنية</span><span class="en">Send wish</span></button>
-  </form>
-</section>
-
-<!-- QR PASS -->
-<section class="reveal" id="passSection">
+<!-- personal pass via shared ?g= link only -->
+<section class="reveal" id="passSection" style="display:none">
   <div class="kicker"><span class="ar">بطاقة الدخول</span><span class="en">Entry Pass</span></div>
   <h2 class="title"><span class="ar">تصريح الدخول الخاص بكم</span><span class="en">Your personal QR pass</span></h2>
   <div class="rule"></div>
@@ -683,31 +751,76 @@ function toggleMusic(){
 }
 $('#musicBtn').onclick=toggleMusic;
 
-/* ---------- RSVP ---------- */
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* ---------- combined RSVP + message, with automatic QR entry pass ---------- */
+// guest count stepper
+let gCount=1;
+function setGuests(n){gCount=Math.max(1,Math.min(30,n));$('#gNum').textContent=gCount;$('#rCount').value=gCount;}
+$('#gMinus').onclick=()=>setGuests(gCount-1);
+$('#gPlus').onclick=()=>setGuests(gCount+1);
+// hide guest count when not attending
+$$('input[name=att]').forEach(r=>r.addEventListener('change',()=>{
+  $('#guestsRow').style.display=$('input[name=att]:checked').value==='no'?'none':'';
+}));
+
 $('#rsvpForm').onsubmit=async e=>{
   e.preventDefault();
-  const rec={name:$('#rName').value.trim(),count:+$('#rCount').value||1,att:$('input[name=att]:checked').value};
-  if(!rec.name)return;
-  const btn=e.target.querySelector('button[type=submit]');if(btn)btn.disabled=true;
   const ar=document.body.dir==='rtl';
-  await DB.addRsvp(rec);
+  const name=$('#rName').value.trim();
+  const att=$('input[name=att]:checked').value;
+  const msg=$('#wMsg').value.trim();
+  const count=att==='yes'?(+$('#rCount').value||1):1;
+  if(!name){toast(ar?'من فضلك اكتب اسمك':'Please enter your name');return;}
+  const btn=$('.btn-send');if(btn)btn.disabled=true;
+  await DB.addRsvp({name,count,att});
+  if(msg) await DB.addWish({name,msg});
+  if(att==='yes'){
+    const data={id:'P'+Date.now().toString(36)+Math.floor(Math.random()*46656).toString(36),name,type:count>1?'family':'single',count};
+    try{await DB.addPass(data);}catch(err){}
+    showRsvpConfirm(data);
+  }else{
+    showRsvpDecline(name);
+  }
   if(btn)btn.disabled=false;
-  e.target.reset();$('#rCount').value=1;
-  toast(ar?'شكراً! تم استلام تأكيدكم 💐':'Thank you! Your RSVP is saved 💐');
+  e.target.reset();setGuests(1);$('#guestsRow').style.display='';
 };
 
-/* ---------- wishes (private: saved for host, not shown to guests) ---------- */
-function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-$('#wishForm').onsubmit=async e=>{
-  e.preventDefault();
-  const w={name:$('#wName').value.trim(),msg:$('#wMsg').value.trim()};
-  if(!w.name||!w.msg)return;
-  const btn=e.target.querySelector('button[type=submit]');if(btn)btn.disabled=true;
-  await DB.addWish(w);
-  if(btn)btn.disabled=false;
-  e.target.reset();
-  toast(document.body.dir==='rtl'?'وصلت أمنيتكم، شكراً 🤍':'Your wish was received, thank you 🤍');
-};
+function showRsvpConfirm(data){
+  const ar=document.body.dir==='rtl';
+  const box=$('#rsvpResult');box.innerHTML='';
+  const card=document.createElement('div');card.className='confirm-card';
+  card.innerHTML=`<h3>${ar?'تم تأكيد حضوركم 🤍':'You’re confirmed 🤍'}</h3>
+    <div class="sub">${ar?'هذا تصريح دخولكم — احفظوه واعرضوه عند الباب':'This is your entry pass — save it and show it at the door'}</div>
+    <div class="qr-holder"></div>`;
+  box.appendChild(card);
+  const holder=renderPass(card.querySelector('.qr-holder'),data,false);
+  const row=document.createElement('div');row.className='btn-row';row.style.cssText='margin-top:16px;justify-content:center';
+  const dl=document.createElement('button');dl.className='btn btn-ghost';dl.innerHTML='<span class="ar">حفظ التصريح</span><span class="en">Save pass</span>';
+  dl.onclick=()=>downloadPass(holder,data.name);
+  const sh=document.createElement('button');sh.className='btn btn-primary';sh.innerHTML='<span class="ar">مشاركة</span><span class="en">Share</span>';
+  sh.onclick=()=>sharePass(holder,data);
+  row.append(dl,sh);card.appendChild(row);
+  card.scrollIntoView({behavior:'smooth',block:'center'});
+  toast(ar?'تم إنشاء تصريح دخولكم 🎟️':'Your entry pass is ready 🎟️');
+}
+function showRsvpDecline(name){
+  const ar=document.body.dir==='rtl';
+  $('#rsvpResult').innerHTML=`<div class="confirm-card"><h3>${ar?'سنفتقدكم 🤍':'We’ll miss you 🤍'}</h3><div class="sub">${ar?'شكراً لإخباركم لنا 🤍':'Thank you for letting us know 🤍'}</div></div>`;
+  const el=$('#rsvpResult').firstElementChild; if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
+  toast(ar?'شكراً لردكم 🤍':'Thank you for your reply 🤍');
+}
+async function sharePass(holder,data){
+  const img=holder.querySelector('img')||holder.querySelector('canvas');
+  if(!img){return;}
+  const src=img.tagName==='IMG'?img.src:img.toDataURL();
+  try{
+    const blob=await (await fetch(src)).blob();
+    const file=new File([blob],'entry-pass.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Mazen & Aya — Entry Pass',text:'My entry pass 🎟️'});return;}
+  }catch(e){}
+  downloadPass(holder,data.name);
+}
 
 /* ---------- visit analytics ---------- */
 (async function(){try{await DB.addVisit();}catch(e){}})();
@@ -718,6 +831,7 @@ $('#wishForm').onsubmit=async e=>{
   if(!p)return;
   try{
     const data=JSON.parse(decodeURIComponent(escape(atob(p.replace(/-/g,'+').replace(/_/g,'/')))));
+    $('#passSection').style.display='';
     renderPass($('#passArea'),data,true);
   }catch(e){}
 })();
