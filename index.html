@@ -533,8 +533,9 @@ body[dir="ltr"] .gate-btn{font-family:'Cormorant Garamond',serif;font-size:20px;
         <!-- secure host login (Supabase) -->
         <div id="dashAuthSB">
           <div class="field"><label><span class="ar">البريد الإلكتروني للمضيف</span><span class="en">Host email</span></label><input type="email" id="dashEmail" autocomplete="email" /></div>
-          <button class="btn btn-primary" id="dashSendLink" style="width:100%"><span class="ar">أرسل رابط الدخول</span><span class="en">Send login link</span></button>
-          <p class="note"><span class="ar">ستصلك رسالة بها رابط سرّي لفتح اللوحة. للمضيف فقط.</span><span class="en">You’ll get an email with a secure link to open the dashboard. Host only.</span></p>
+          <div class="field"><label><span class="ar">كلمة المرور</span><span class="en">Password</span></label><input type="password" id="dashPw" autocomplete="current-password" /></div>
+          <button class="btn btn-primary" id="dashLoginBtn" style="width:100%"><span class="ar">دخول</span><span class="en">Enter</span></button>
+          <p class="note"><span class="ar">للمضيف فقط.</span><span class="en">Host only.</span></p>
         </div>
         <!-- offline fallback (only when no backend configured) -->
         <div id="dashAuthLocal" style="display:none">
@@ -970,15 +971,19 @@ async function refreshDashAuthUI(){
 }
 $('#hostBtn').onclick=()=>{openModal('dashModal'); if($('#dashEmail'))$('#dashEmail').value=CONFIG.hostEmail||''; if($('#dashPass'))$('#dashPass').value=''; refreshDashAuthUI();};
 if(SB){
-  $('#dashSendLink').onclick=async ()=>{
+  const doLogin=async ()=>{
     const ar=document.body.dir==='rtl';
     const email=($('#dashEmail').value||'').trim();
-    if(!email){toast(ar?'اكتب بريدك الإلكتروني':'Enter your email');return;}
-    const btn=$('#dashSendLink');btn.disabled=true;
-    const {error}=await SB.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname}});
+    const password=$('#dashPw').value||'';
+    if(!email||!password){toast(ar?'اكتب البريد وكلمة المرور':'Enter email and password');return;}
+    const btn=$('#dashLoginBtn');btn.disabled=true;
+    const {error}=await SB.auth.signInWithPassword({email,password});
     btn.disabled=false;
-    toast(error?('خطأ: '+error.message):(ar?'📧 تحقّق من بريدك وافتح رابط الدخول':'📧 Check your email and open the login link'));
+    if(error){toast(ar?'بيانات الدخول غير صحيحة':'Wrong email or password');return;}
+    refreshDashAuthUI();
   };
+  $('#dashLoginBtn').onclick=doLogin;
+  $('#dashPw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
   $('#dashSignout').onclick=async ()=>{try{await SB.auth.signOut();}catch(e){}refreshDashAuthUI();toast(document.body.dir==='rtl'?'تم تسجيل الخروج':'Signed out');};
   SB.auth.onAuthStateChange((_ev,session)=>{ if(session && $('#dashModal').classList.contains('show')) refreshDashAuthUI(); });
 }
