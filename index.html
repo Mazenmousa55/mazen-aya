@@ -530,12 +530,22 @@ body[dir="ltr"] .gate-btn{font-family:'Cormorant Garamond',serif;font-size:20px;
     <div class="sheet-body" id="dashBody">
       <!-- login -->
       <div id="dashLogin">
-        <div class="field"><label><span class="ar">كلمة المرور</span><span class="en">Password</span></label><input type="password" id="dashPass" /></div>
-        <button class="btn btn-primary" id="dashEnter" style="width:100%"><span class="ar">دخول</span><span class="en">Enter</span></button>
-        <p class="note"><span class="ar">للمضيف فقط.</span><span class="en">Host access only.</span></p>
+        <!-- secure host login (Supabase) -->
+        <div id="dashAuthSB">
+          <div class="field"><label><span class="ar">البريد الإلكتروني للمضيف</span><span class="en">Host email</span></label><input type="email" id="dashEmail" autocomplete="email" /></div>
+          <button class="btn btn-primary" id="dashSendLink" style="width:100%"><span class="ar">أرسل رابط الدخول</span><span class="en">Send login link</span></button>
+          <p class="note"><span class="ar">ستصلك رسالة بها رابط سرّي لفتح اللوحة. للمضيف فقط.</span><span class="en">You’ll get an email with a secure link to open the dashboard. Host only.</span></p>
+        </div>
+        <!-- offline fallback (only when no backend configured) -->
+        <div id="dashAuthLocal" style="display:none">
+          <div class="field"><label><span class="ar">كلمة المرور</span><span class="en">Password</span></label><input type="password" id="dashPass" /></div>
+          <button class="btn btn-primary" id="dashEnter" style="width:100%"><span class="ar">دخول</span><span class="en">Enter</span></button>
+          <p class="note"><span class="ar">للمضيف فقط.</span><span class="en">Host access only.</span></p>
+        </div>
       </div>
       <!-- panel -->
       <div id="dashPanel" style="display:none">
+        <div style="text-align:end;margin-bottom:10px"><button id="dashSignout" style="background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:inherit"><span class="ar">تسجيل الخروج</span><span class="en">Sign out</span></button></div>
         <div class="dash-grid">
           <div class="stat"><div class="n" id="sVisits">0</div><div class="l"><span class="ar">زيارة</span><span class="en">Visits</span></div></div>
           <div class="stat"><div class="n" id="sYes">0</div><div class="l"><span class="ar">حضور مؤكد</span><span class="en">Attending</span></div></div>
@@ -618,7 +628,8 @@ const CONFIG = {
   // Leave url:"" to store data on this device only.
   supabase:{ url:"https://aydqkmqheiwaqgajgaac.supabase.co", anonKey:"sb_publishable_sjqxeaaUV6ImjQZzXFO__g_TFW3h1fy" },
 
-  dashPassword:"1911"
+  hostEmail:"mazenmousa55@gmail.com", // the only account allowed to open the dashboard
+  dashPassword:"1911"                 // offline-only fallback (used if Supabase isn't configured)
 };
 /* ================= no need to edit below ================= */
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -944,13 +955,38 @@ $('#sharePhoto').onclick=async()=>{
   },'image/png');
 };
 
-/* ---------- dashboard ---------- */
-$('#hostBtn').onclick=()=>{openModal('dashModal');$('#dashLogin').style.display='';$('#dashPanel').style.display='none';$('#dashPass').value='';};
-$('#dashEnter').onclick=()=>{
+/* ---------- dashboard (secure host login via Supabase, password fallback offline) ---------- */
+async function refreshDashAuthUI(){
+  const ar=document.body.dir==='rtl';
+  if(SB){
+    $('#dashAuthLocal').style.display='none';$('#dashAuthSB').style.display='';
+    let session=null;try{const {data}=await SB.auth.getSession();session=data&&data.session;}catch(e){}
+    if(session){$('#dashLogin').style.display='none';$('#dashPanel').style.display='';renderDash();}
+    else{$('#dashLogin').style.display='';$('#dashPanel').style.display='none';}
+  }else{
+    $('#dashAuthSB').style.display='none';$('#dashAuthLocal').style.display='';
+    $('#dashLogin').style.display='';$('#dashPanel').style.display='none';
+  }
+}
+$('#hostBtn').onclick=()=>{openModal('dashModal'); if($('#dashEmail'))$('#dashEmail').value=CONFIG.hostEmail||''; if($('#dashPass'))$('#dashPass').value=''; refreshDashAuthUI();};
+if(SB){
+  $('#dashSendLink').onclick=async ()=>{
+    const ar=document.body.dir==='rtl';
+    const email=($('#dashEmail').value||'').trim();
+    if(!email){toast(ar?'اكتب بريدك الإلكتروني':'Enter your email');return;}
+    const btn=$('#dashSendLink');btn.disabled=true;
+    const {error}=await SB.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname}});
+    btn.disabled=false;
+    toast(error?('خطأ: '+error.message):(ar?'📧 تحقّق من بريدك وافتح رابط الدخول':'📧 Check your email and open the login link'));
+  };
+  $('#dashSignout').onclick=async ()=>{try{await SB.auth.signOut();}catch(e){}refreshDashAuthUI();toast(document.body.dir==='rtl'?'تم تسجيل الخروج':'Signed out');};
+  SB.auth.onAuthStateChange((_ev,session)=>{ if(session && $('#dashModal').classList.contains('show')) refreshDashAuthUI(); });
+}
+if($('#dashEnter')) $('#dashEnter').onclick=()=>{
   if($('#dashPass').value===CONFIG.dashPassword){$('#dashLogin').style.display='none';$('#dashPanel').style.display='';renderDash();}
   else toast(document.body.dir==='rtl'?'كلمة المرور غير صحيحة':'Wrong password');
 };
-$('#dashPass').addEventListener('keydown',e=>{if(e.key==='Enter')$('#dashEnter').click();});
+if($('#dashPass')) $('#dashPass').addEventListener('keydown',e=>{if(e.key==='Enter')$('#dashEnter').click();});
 $$('.tabbar button').forEach(b=>b.onclick=()=>{
   $$('.tabbar button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
   $$('.tabpane').forEach(p=>p.classList.remove('on'));$('#'+b.dataset.tab).classList.add('on');
