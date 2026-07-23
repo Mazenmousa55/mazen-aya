@@ -617,7 +617,7 @@ const CONFIG = {
   mapEmbedQuery:"New Land Resort Celia Hall",
 
   // RSVP destination — WhatsApp (digits only, intl format) OR leave "" to use email:
-  whatsapp:"", rsvpEmail:"mazenmousa55@gmail.com",
+  whatsapp:"", rsvpEmail:"",
 
   // Background music file (mp3 URL). Leave "" for no music.
   musicUrl:"music.mp3",
@@ -629,7 +629,6 @@ const CONFIG = {
   // Leave url:"" to store data on this device only.
   supabase:{ url:"https://aydqkmqheiwaqgajgaac.supabase.co", anonKey:"sb_publishable_sjqxeaaUV6ImjQZzXFO__g_TFW3h1fy" },
 
-  hostEmail:"mazenmousa55@gmail.com", // the only account allowed to open the dashboard
   dashPassword:"1911"                 // offline-only fallback (used if Supabase isn't configured)
 };
 /* ================= no need to edit below ================= */
@@ -969,7 +968,7 @@ async function refreshDashAuthUI(){
     $('#dashLogin').style.display='';$('#dashPanel').style.display='none';
   }
 }
-$('#hostBtn').onclick=()=>{openModal('dashModal'); if($('#dashEmail'))$('#dashEmail').value=CONFIG.hostEmail||''; if($('#dashPass'))$('#dashPass').value=''; refreshDashAuthUI();};
+$('#hostBtn').onclick=()=>{openModal('dashModal'); if($('#dashEmail'))$('#dashEmail').value=''; if($('#dashPw'))$('#dashPw').value=''; if($('#dashPass'))$('#dashPass').value=''; refreshDashAuthUI();};
 if(SB){
   const doLogin=async ()=>{
     const ar=document.body.dir==='rtl';
